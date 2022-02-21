@@ -54,22 +54,28 @@ namespace SquareSorting
             return AreArraySorted(arrayTest1) && AreArraySorted(arrayTest2);
         }
         
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             if (!TestAreArraySorted() || !TestSortByBubble())
             {
                 Console.WriteLine("Tests failed :(");
-                return;
+                return -1;
             }
-            var inputString = Console.ReadLine();
-            int arrayLength = int.Parse(inputString);
+            Console.WriteLine("Enter lenght of the array");
+            int arrayLength = int.Parse(Console.ReadLine());
             int[] array = new int[arrayLength];
-            
+            Console.WriteLine("Enter the array separated by space");
+            var inputString = Console.ReadLine();
+            Console.WriteLine("{0}", inputString);
+
             SortByBubble(array);
+            Console.WriteLine("The array after sorting:");
             for (int i = 0; i < array.Length; ++i)
             {
                 Console.Write("{0} ", array[i]);
             }
+            
+            return 0;
         }
     }
 }
