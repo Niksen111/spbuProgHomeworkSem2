@@ -36,5 +36,5 @@ Desktop.ini
 
 *.sln
 *.csproj
-*.xml
+**/*.xml
 AssemblyInfo.cs
