@@ -63,11 +63,14 @@ namespace SquareSorting
             }
             Console.WriteLine("Enter lenght of the array");
             int arrayLength = int.Parse(Console.ReadLine());
-            int[] array = new int[arrayLength];
             Console.WriteLine("Enter the array separated by space");
             var inputString = Console.ReadLine();
-            Console.WriteLine("{0}", inputString);
-
+            var arrayStrings = inputString.Split(' ');
+            int[] array = new int[arrayLength];
+            for (int i = 0; i < arrayStrings.Length; ++i)
+            {
+                array[i] = Int32.Parse(arrayStrings[i]);
+            }
             SortByBubble(array);
             Console.WriteLine("The array after sorting:");
             for (int i = 0; i < array.Length; ++i)
