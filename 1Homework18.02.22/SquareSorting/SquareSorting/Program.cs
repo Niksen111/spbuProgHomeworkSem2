@@ -4,7 +4,7 @@ namespace SquareSorting
 {
     internal class Program
     {
-        public static bool AreArraySorted(int[] array)
+        private static bool AreArraySorted(int[] array)
         {
             for (int i = 0; i < array.Length - 1; ++i)
             {
@@ -16,13 +16,13 @@ namespace SquareSorting
 
             return true;
         }
-        public static void Swap(ref int firstVariable, ref int secondVariable)
+        private static void Swap(ref int firstVariable, ref int secondVariable)
         {
             firstVariable ^= secondVariable;
             secondVariable ^= firstVariable;
             firstVariable ^= secondVariable;
         }
-        public static void SortByBubble(int[] array)
+        private static void SortByBubble(int[] array)
         {
             for (int i = 0; i < array.Length; ++i)
             {
@@ -36,7 +36,7 @@ namespace SquareSorting
             }
         }
 
-        public static bool TestAreArraySorted()
+        private static bool TestAreArraySorted()
         {
             int[] arrayTest1 = new[] { 5, 7, 4, -8, 1, 5 };
             int[] arrayTest2 = new[] { 0 };
@@ -45,9 +45,9 @@ namespace SquareSorting
             return !AreArraySorted(arrayTest1) && AreArraySorted(arrayTest2)
                                                && AreArraySorted(arrayTest3);
         }
-        public static bool TestSortByBubble()
+        private static bool TestSortByBubble()
         {
-            int[] arrayTest1 = new int[] { 5, 7, 4, -8, 1, 5 };
+            int[] arrayTest1 = new int[] { 5, 7, 4, -8, 0, 5 };
             int[] arrayTest2 = new int[] { 0 };
             SortByBubble(arrayTest1);
             SortByBubble(arrayTest2);
@@ -64,8 +64,7 @@ namespace SquareSorting
             Console.WriteLine("Enter lenght of the array");
             int arrayLength = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter the array separated by space");
-            var inputString = Console.ReadLine();
-            var arrayStrings = inputString.Split(' ');
+            var arrayStrings = Console.ReadLine().Split(' ');
             int[] array = new int[arrayLength];
             for (int i = 0; i < arrayStrings.Length; ++i)
             {
@@ -77,7 +76,6 @@ namespace SquareSorting
             {
                 Console.Write("{0} ", array[i]);
             }
-            
             return 0;
         }
     }
