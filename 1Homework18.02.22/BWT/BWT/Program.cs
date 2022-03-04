@@ -84,6 +84,21 @@ namespace BWT
             }
         }
 
+        private static void InsertionSort(int[] arrayIndexes, string line, int shift, int start, int end)
+        {
+            for (int i = start + 1; i <= end; ++i)
+            {
+                for (int j = i; j > start; --j)
+                {
+                    if (line[(arrayIndexes[j] + shift) % line.Length] <
+                        line[(arrayIndexes[j - 1] + shift) % line.Length])
+                    {
+                        Swap(ref arrayIndexes[j], ref arrayIndexes[j + 1]);
+                    }
+                }
+            }
+        }
+
         private static void SortLines(int[] arrayIndexes, string line, int shift, int start, int end)
         {
             if (start >= end)
@@ -117,7 +132,7 @@ namespace BWT
             {
                 if (arrayIndexes[i] == 0)
                 {
-                    index = i + 1;
+                    index = i;
                 }
 
                 result[i] = line[(arrayIndexes[i] + line.Length - 1) % line.Length];
@@ -127,6 +142,23 @@ namespace BWT
 
         private static string InverseBWT(string line, ref int index)
         {
+            // int[] characterOffset = new int[line.Length];
+            // for (int i = 0; i < line.Length; ++i)
+            // {
+            //     characterOffset[i] = i;
+            // }
+            // InsertionSort(characterOffset, line, 0, 0, line.Length - 1);
+            // int[] arrayIndexes = new int[line.Length];
+            // Array.Copy(characterOffset, arrayIndexes, line.Length);
+            // int[] buffer = new int[line.Length];
+            // for (int i = 0; i < line.Length; ++i)
+            // {
+            //     for (int j = 0; j < line.Length; ++j)
+            //     {
+            //         buffer[i] = arrayIndexes[characterOffset[i]];
+            //     }
+            //     Array.Copy(arrayIndexes, buffer, line.Length);
+            // }
             return line;
         }
 
@@ -135,11 +167,11 @@ namespace BWT
             var string1 = "ABACABA";
             var string1Answer = "BCABAAA";
             int index1 = 0;
-            int index1Answer = 3;
+            int index1Answer = 2;
             var string2 = "mississippi";
             var string2Answer = "pssmipissii";
             int index2 = 0;
-            int index2Answer = 5;
+            int index2Answer = 4;
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
@@ -156,10 +188,10 @@ namespace BWT
         {
             var string1Answer = "ABACABA";
             var string1 = "BCABAAA";
-            int index1 = 3;
+            int index1 = 2;
             var string2Answer = "mississippi";
             var string2 = "pssmipissii";
-            int index2 = 5;
+            int index2 = 4;
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
