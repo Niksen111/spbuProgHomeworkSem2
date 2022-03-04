@@ -93,7 +93,7 @@ namespace BWT
                     if (line[(arrayIndexes[j] + shift) % line.Length] <
                         line[(arrayIndexes[j - 1] + shift) % line.Length])
                     {
-                        Swap(ref arrayIndexes[j], ref arrayIndexes[j + 1]);
+                        Swap(ref arrayIndexes[j], ref arrayIndexes[j - 1]);
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace BWT
 
         private static void SortLines(int[] arrayIndexes, string line, int shift, int start, int end)
         {
-            if (start >= end)
+            if (start >= end || shift >= line.Length)
             {
                 return;
             }
@@ -140,26 +140,28 @@ namespace BWT
             return new string(result);
         }
 
-        private static string InverseBWT(string line, ref int index)
+        private static string InverseBWT(string line, ref int key)
         {
-            // int[] characterOffset = new int[line.Length];
-            // for (int i = 0; i < line.Length; ++i)
-            // {
-            //     characterOffset[i] = i;
-            // }
-            // InsertionSort(characterOffset, line, 0, 0, line.Length - 1);
-            // int[] arrayIndexes = new int[line.Length];
-            // Array.Copy(characterOffset, arrayIndexes, line.Length);
-            // int[] buffer = new int[line.Length];
-            // for (int i = 0; i < line.Length; ++i)
-            // {
-            //     for (int j = 0; j < line.Length; ++j)
-            //     {
-            //         buffer[i] = arrayIndexes[characterOffset[i]];
-            //     }
-            //     Array.Copy(arrayIndexes, buffer, line.Length);
-            // }
-            return line;
+            if (line == null || line.Length == 0)
+            {
+                return line;
+            }
+            int[] characterOffset = new int[line.Length];
+            for (int i = 0; i < line.Length; ++i)
+            {
+                characterOffset[i] = i;
+            }
+            InsertionSort(characterOffset, line, 0, 0, line.Length - 1);
+            char[] result = new char[line.Length];
+            result[0] = line[characterOffset[key]];
+            int lastIndex = characterOffset[key];
+            for (int i = 1; i < line.Length; ++i)
+            {
+                result[i] = line[characterOffset[lastIndex]];
+                lastIndex = characterOffset[lastIndex];
+            }
+            
+            return new string(result);
         }
 
         private static bool TestBWT()
@@ -206,8 +208,7 @@ namespace BWT
         
         public static int Main(string[] args)
         {
-            // || !TestInverseBWT()
-            if (!TestBWT() )
+            if (!TestBWT() || !TestInverseBWT())
             {
                 Console.WriteLine("Tests failed");
                 return -1;
@@ -220,7 +221,7 @@ namespace BWT
                 return -1;
             }
             int key = 0;
-            BWT(input, ref key);
+            input = BWT(input, ref key);
             if (key == -1)
             {
                 Console.WriteLine("BTW failed");
