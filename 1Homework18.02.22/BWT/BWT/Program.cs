@@ -39,18 +39,18 @@ namespace BWT
             {
                 Swap(ref arrayIndexes[start], ref arrayIndexes[i]);
                 int j = start;
-                while (j < i)
+                while (start + (j - start) * 2 + 1 <= i - 1)
                 {
-                    if (i - j >= 2)
+                    if (start + (j - start) * 2 + 2 <= i - 1)
                     {
-                        if (line[(arrayIndexes[j + 1] + shift) % line.Length] >=
-                            line[(arrayIndexes[j + 2] + shift) % line.Length])
+                        if (line[(arrayIndexes[start + (j - start) * 2 + 1] + shift) % line.Length] >=
+                            line[(arrayIndexes[start + (j - start) * 2 + 2] + shift) % line.Length])
                         {
                             if (line[(arrayIndexes[j] + shift) % line.Length] <
-                                line[(arrayIndexes[j + 1] + shift) % line.Length])
+                                line[(arrayIndexes[start + (j - start) * 2 + 1] + shift) % line.Length])
                             {
-                                Swap(ref arrayIndexes[j], ref arrayIndexes[j + 1]);
-                                ++j;
+                                Swap(ref arrayIndexes[j], ref arrayIndexes[start + (j - start) * 2 + 1]);
+                                j = start + (j - start) * 2 + 1;
                             }
                             else
                             {
@@ -60,10 +60,10 @@ namespace BWT
                         else
                         {
                             if (line[(arrayIndexes[j] + shift) % line.Length] <
-                                line[(arrayIndexes[j + 2] + shift) % line.Length])
+                                line[(arrayIndexes[start + (j - start) * 2 + 2] + shift) % line.Length])
                             {
-                                Swap(ref arrayIndexes[j], ref arrayIndexes[j + 2]);
-                                j += 2;
+                                Swap(ref arrayIndexes[j], ref arrayIndexes[start + (j - start) * 2 + 2]);
+                                j = start + (j - start) * 2 + 2;
                             }
                             else
                             {
@@ -73,9 +73,9 @@ namespace BWT
                     }
                     else
                     {
-                        if (line[(arrayIndexes[j] + shift) % line.Length] < line[(arrayIndexes[j + 1] + shift) % line.Length])
+                        if (line[(arrayIndexes[j] + shift) % line.Length] < line[(arrayIndexes[start + (j - start) * 2 + 1] + shift) % line.Length])
                         {
-                            Swap(ref arrayIndexes[j], ref arrayIndexes[j + 1]);
+                            Swap(ref arrayIndexes[j], ref arrayIndexes[start + (j - start) * 2 + 1]);
                         }
 
                         j = i;
@@ -117,7 +117,7 @@ namespace BWT
             {
                 if (arrayIndexes[i] == 0)
                 {
-                    index = i;
+                    index = i + 1;
                 }
 
                 result[i] = line[(arrayIndexes[i] + line.Length - 1) % line.Length];
@@ -137,9 +137,9 @@ namespace BWT
             int index1 = 0;
             int index1Answer = 3;
             var string2 = "mississippi";
-            var string2Answer = "ipssmpissii";
+            var string2Answer = "pssmipissii";
             int index2 = 0;
-            int index2Answer = 6;
+            int index2Answer = 5;
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
@@ -158,8 +158,8 @@ namespace BWT
             var string1 = "BCABAAA";
             int index1 = 3;
             var string2Answer = "mississippi";
-            var string2 = "ipssmpissii";
-            int index2 = 6;
+            var string2 = "pssmipissii";
+            int index2 = 5;
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
