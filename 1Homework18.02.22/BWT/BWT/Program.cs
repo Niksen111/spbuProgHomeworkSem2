@@ -180,27 +180,29 @@ namespace BWT
                 Console.WriteLine("Tests failed");
                 return -1;
             }
+            Console.WriteLine("Enter a string without spaces:");
             var input = Console.ReadLine();
             if (input == null)
             {
                 Console.WriteLine("Input error");
                 return -1;
             }
-            int index = 0;
-            BWT(input, ref index);
-            if (index == -1)
+            int key = 0;
+            BWT(input, ref key);
+            if (key == -1)
             {
                 Console.WriteLine("BTW failed");
                 return -1;
             }
-            Console.WriteLine("");
-            input = InverseBWT(input, ref index);
-            if (index == -1)
+            Console.WriteLine("The string after BWT: {0}", input);
+            Console.WriteLine("The key: {0}", key);
+            input = InverseBWT(input, ref key);
+            if (key == -1)
             {
-                Console.WriteLine("Inverse BTW failed");
+                Console.WriteLine("Inverse BWT failed");
                 return -1;
             }
-            Console.WriteLine("");
+            Console.WriteLine("The string after Inverse BWT: {0}", input);
             return 0;
         }
     }
