@@ -5,12 +5,31 @@ namespace BWT
 {
     internal class Program
     {
-        private static void Swap(ref int firstVariable, ref int secondVariable)
+        private static void Swap(ref int variable1, ref int variable2)
         {
-            firstVariable ^= secondVariable;
-            secondVariable ^= firstVariable;
-            firstVariable ^= secondVariable;
+            variable1 ^= variable2;
+            variable2 ^= variable1;
+            variable1 ^= variable2;
         }
+
+        private static bool AreArraysEquals(int[] array1, int[] array2)
+        {
+            if (array1.Length != array2.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < array1.Length; ++i)
+            {
+                if (array1[i] != array2[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
         // Using heap sorting sorts a segment of the array,
         // which is a list of indexes of the characters of the transmitted word
         // Shift - the index of the character in the words, by which the sorting is currently performed
@@ -164,6 +183,29 @@ namespace BWT
             return new string(result);
         }
 
+        private static bool TestHeapSort()
+        {
+            var line = "ABACABAAAA";
+            var array1 = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var array2 = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var array1Answer = new int[10] {9, 8, 0, 4, 2, 6, 7, 5, 1, 3};
+            var array2Answer = new int[10] {0, 1, 2, 3, 5, 4, 7, 8, 6, 9};
+            HeapSort(array1, line, 0, 0, 9);
+            HeapSort(array2, line, 2, 4, 9);
+            return AreArraysEquals(array1, array1Answer) && AreArraysEquals(array2, array2Answer);
+        }
+        
+        private static bool TestInsertionSort()
+        {
+            var line = "ABACABAAAA";
+            var array1 = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var array2 = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var array1Answer = new int[10] {0, 2, 4, 6, 7, 8, 9, 1, 5, 3};
+            var array2Answer = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            InsertionSort(array1, line, 0, 0, 9);
+            InsertionSort(array2, line, 2, 4, 9);
+            return AreArraysEquals(array1, array1Answer) && AreArraysEquals(array2, array2Answer);
+        }
         private static bool TestBWT()
         {
             var string1 = "ABACABA";
@@ -208,7 +250,7 @@ namespace BWT
         
         public static int Main(string[] args)
         {
-            if (!TestBWT() || !TestInverseBWT())
+            if (!TestHeapSort() || !TestInsertionSort() || !TestBWT() || !TestInverseBWT())
             {
                 Console.WriteLine("Tests failed");
                 return -1;
