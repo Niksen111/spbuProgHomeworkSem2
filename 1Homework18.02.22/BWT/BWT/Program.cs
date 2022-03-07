@@ -138,28 +138,30 @@ namespace BWT
             }
             SortLines(arrayIndexes, line, shift + 1, begin, end);
         }
-        private static string BWT(string line, ref int index)
+        private static (string, int) BWT(string line)
         {
             int[] arrayIndexes = new int[line.Length];
             for (int i = 0; i < line.Length; ++i)
             {
                 arrayIndexes[i] = i;
             }
+
+            int key = 0;
             SortLines(arrayIndexes, line, 0, 0, line.Length - 1);
             char[] result = new char[line.Length];
             for (int i = 0; i < line.Length; ++i)
             {
                 if (arrayIndexes[i] == 0)
                 {
-                    index = i;
+                    key = i;
                 }
 
                 result[i] = line[(arrayIndexes[i] + line.Length - 1) % line.Length];
             }
-            return new string(result);
+            return (new string(result), key);
         }
 
-        private static string InverseBWT(string line, ref int key)
+        private static string InverseBWT(string line, int key)
         {
             if (line == null || line.Length == 0)
             {
@@ -219,9 +221,9 @@ namespace BWT
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
-            string1 = BWT(string1, ref index1);
-            string2 = BWT(string2, ref index2);
-            string3 = BWT(string3, ref index3);
+            (string1, index1) = BWT(string1);
+            (string2, index2) = BWT(string2);
+            (string3, index3) = BWT(string3);
             return String.Compare(string1, string1Answer) == 0
                 && String.Compare(string2, string2Answer) == 0
                 && String.Compare(string3, string3Answer) == 0
@@ -239,13 +241,12 @@ namespace BWT
             var string3 = "";
             var string3Answer = "";
             int index3 = 0;
-            string1 = InverseBWT(string1, ref index1);
-            string2 = InverseBWT(string2, ref index2);
-            string3 = InverseBWT(string3, ref index3);
+            string1 = InverseBWT(string1, index1);
+            string2 = InverseBWT(string2, index2);
+            string3 = InverseBWT(string3, index3);
             return String.Compare(string1, string1Answer) == 0
                    && String.Compare(string2, string2Answer) == 0
-                   && String.Compare(string3, string3Answer) == 0
-                   && index1 != -1 && index2 != -1 && index3 != -1;
+                   && String.Compare(string3, string3Answer) == 0;
         }
         
         public static int Main(string[] args)
@@ -263,7 +264,7 @@ namespace BWT
                 return -1;
             }
             int key = 0;
-            input = BWT(input, ref key);
+            (input, key) = BWT(input);
             if (key == -1)
             {
                 Console.WriteLine("BTW failed");
@@ -271,12 +272,7 @@ namespace BWT
             }
             Console.WriteLine("The string after BWT: {0}", input);
             Console.WriteLine("The key: {0}", key);
-            input = InverseBWT(input, ref key);
-            if (key == -1)
-            {
-                Console.WriteLine("Inverse BWT failed");
-                return -1;
-            }
+            input = InverseBWT(input, key);
             Console.WriteLine("The string after Inverse BWT: {0}", input);
             return 0;
         }
