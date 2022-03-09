@@ -1,3 +1,19 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+namespace StackCalculator
+{
+    interface IStack
+    {
+        void Push(int number);
 
-Console.WriteLine("Hello, World!");
+        int Pop { get; }
+        
+        int Top { get; }
+        
+        bool IsEmpty { get; }
+    }
+
+    public class StackOnPointers
+    {
+        
+    }
+}
