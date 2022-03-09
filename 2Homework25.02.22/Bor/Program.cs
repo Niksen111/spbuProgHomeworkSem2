@@ -5,13 +5,17 @@ namespace Bor
         {
             private class Node
             {
+                public Node()
+                {
+                    this.Next = new Dictionary<char, Node>();
+                }
                 public short NumberOfWords;
                 public bool IsTerminal;
                 public Dictionary<char, Node> Next;
             }
             public Trie()
             {
-                Head.IsTerminal = false;
+                Head = new Node();
             }
 
             private Node Head;
@@ -95,13 +99,13 @@ namespace Bor
                 }
 
                 --position.NumberOfWords;
-
+                position.IsTerminal = false;
                 if (position.Next.Count != 0)
                 {
                     return true;
                 }
 
-                lastWord.Next[nextSymbol] = null;
+                lastWord.Next.Remove(nextSymbol);
                 return true;
             }
 
@@ -112,7 +116,7 @@ namespace Bor
                 {
                     if (!position.Next.ContainsKey(c))
                     {
-                        return -1;
+                        return 0;
                     }
 
                     position = position.Next[c];
