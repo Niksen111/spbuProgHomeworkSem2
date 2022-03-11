@@ -34,8 +34,4 @@ Desktop.ini
 .DS_Store
 
 
-*.sln
-*.csproj
-**/*.xml
-.idea/
-AssemblyInfo.cs
+
