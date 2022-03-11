@@ -39,9 +39,9 @@ namespace StackCalculator
             return value;
         }
 
-        public float? Top { get => _head?.Value; }
+        public float? Top => _head?.Value;
         
-        public bool IsEmpty { get => _head == null; }
+        public bool IsEmpty => _head == null;
     }
 
     public class ArrayStack : IStack
@@ -79,37 +79,54 @@ namespace StackCalculator
             return _myArray[_filled];
         }
         
-        public float? Top { get => _filled == 0 ? null : _myArray[_filled - 1]; }
+        public float? Top => _filled == 0 ? null : _myArray[_filled - 1];
         
-        public bool IsEmpty { get => _filled == 0; }
+        public bool IsEmpty => _filled == 0; 
     }
 
     public class StackCalculator
     {
-        public StackCalculator()
+        public enum TypesOfStacks
         {
-            _myStack = new ListStack();
+            ArrayStack,
+            ListStack
         }
-        private IStack _myStack;
-        
+
         /// <summary>
-        /// 1 for ListStack
-        /// 2 for ArrayStack
+        /// 1 for ArrayStack
+        /// 2 for ListStack
         /// </summary>
-        /// <param name="numberOfStack"></param>
-        public void ChangeStack(int numberOfStack)
+        /// <param name="typeOfStack"></param>
+        public StackCalculator(TypesOfStacks typeOfStack = TypesOfStacks.ArrayStack)
         {
-            if (numberOfStack == 1)
+            _myStack = new ArrayStack();
+
+            if (typeOfStack == TypesOfStacks.ListStack)
             {
                 _myStack = new ListStack();
+            }
+        }
+        private IStack _myStack;
+
+        /// <summary>
+        /// 1 for ArrayStack
+        /// 2 for ListStack
+        /// </summary>
+        /// <param name="typeOfStack"></param>
+        public void ChangeStack(TypesOfStacks typeOfStack)
+        {
+            if (typeOfStack == TypesOfStacks.ArrayStack)
+            {
+                _myStack = new ArrayStack();
                 return;
             }
 
-            if (numberOfStack == 2)
+            if (typeOfStack == TypesOfStacks.ListStack)
             {
-                _myStack = new ArrayStack();
+                _myStack = new ListStack();
             }
         }
+        
         /// <summary>
         /// Takes an expression in reverse Polish notation.
         /// Returns null if the expression contains any error.
@@ -118,7 +135,70 @@ namespace StackCalculator
         /// <returns></returns>
         public float? CalculateExpression(string expression)
         {
-            return 0;
+            var expressionFixed = expression.Split();
+            int number;
+            foreach (var piece in expressionFixed)
+            {
+                if (int.TryParse(piece, out number))
+                {
+                    _myStack.Push(number);
+                }
+                else if (piece.Length == 1)
+                {
+                    float? resultOfOperation = Calculate(piece[0]);
+                    if (resultOfOperation == null)
+                    {
+                        return null;
+                    }
+                    _myStack.Push((float) resultOfOperation);
+                }
+                else return null;
+            }
+
+            float? result = _myStack.Pop();
+            if (result == null || !_myStack.IsEmpty)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        private float? Calculate(char operation)
+        {
+            float? variable1 = _myStack.Pop();
+            float? variable2 = _myStack.Pop();
+            if (variable1 == null || variable2 == null)
+            {
+                return null;
+            }
+            switch (operation)
+            {
+                case '+':
+                    return variable1 + variable2;
+                case '-':
+                    return variable1 - variable2;
+                case '*':
+                    return variable1 * variable2;
+                case '/':
+                    if (Math.Abs((float) variable2) < 0.0001)
+                    {
+                        return null;
+                    }
+                    return variable1 / variable2;
+                default:
+                    return null;
+            }
+        }
+    }
+    
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            var x = new StackCalculator();
+            x.ChangeStack(StackCalculator.TypesOfStacks.ListStack);
+            
+            return;
         }
     }
 }
