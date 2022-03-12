@@ -1,6 +1,6 @@
 namespace StackCalculator.Solution;
 
-interface IStack
+public interface IStack
 {
     void Push(float number);
 
