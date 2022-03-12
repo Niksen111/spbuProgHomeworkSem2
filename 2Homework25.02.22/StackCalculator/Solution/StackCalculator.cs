@@ -92,15 +92,15 @@ public class StackCalculator
             case '+':
                 return variable1 + variable2;
             case '-':
-                return variable1 - variable2;
+                return variable2 - variable1;
             case '*':
                 return variable1 * variable2;
             case '/':
-                if (Math.Abs((float) variable2) < 0.0001)
+                if (Math.Abs((float) variable1) < 0.0001)
                 {
                     return null;
                 }
-                return variable1 / variable2;
+                return variable2 / variable1;
             default:
                 return null;
         }
