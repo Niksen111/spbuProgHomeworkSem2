@@ -6,11 +6,11 @@ public class Trie
         {
             public Node()
             {
-                Next = new Dictionary<char, Node>();
+                Next = new Dictionary<byte, Node>();
             }
             public short NumberOfWords;
             public bool IsTerminal;
-            public Dictionary<char, Node> Next;
+            public Dictionary<byte, Node> Next;
         }
         public Trie()
         {
@@ -21,28 +21,28 @@ public class Trie
 
         public int Size => Head.NumberOfWords;
         
-        public bool Add(string element)
+        public bool Add(byte[] element)
         {
             Node position = Head;
-            foreach (char c in element)
+            foreach (byte b in element)
             {
-                if (!position.Next.ContainsKey(c))
+                if (!position.Next.ContainsKey(b))
                 {
                     Node newNode = new Node();
-                    position.Next.Add(c, newNode);
+                    position.Next.Add(b, newNode);
                 }
 
-                position = position.Next[c];
+                position = position.Next[b];
             }
 
             bool result = !position.IsTerminal;
             if (result)
             {
                 position = Head;
-                foreach (char c in element)
+                foreach (byte b in element)
                 {
                     ++position.NumberOfWords;
-                    position = position.Next[c];
+                    position = position.Next[b];
                 }
                 ++position.NumberOfWords;
             }
@@ -50,29 +50,29 @@ public class Trie
             return result;
         }
 
-        public bool Contains(string element)
+        public bool Contains(byte[] element)
         {
             Node position = Head;
-            foreach (char c in element)
+            foreach (byte b in element)
             {
-                if (!position.Next.ContainsKey(c))
+                if (!position.Next.ContainsKey(b))
                 {
                     return false;
                 }
 
-                position = position.Next[c];
+                position = position.Next[b];
             }
             return position.IsTerminal;
         }
 
-        public bool Remove(string element)
+        public bool Remove(byte[] element)
         {
             Node position = Head;
             Node lastWord = Head;
-            char nextSymbol = '\0';
-            foreach (char c in element)
+            byte nextSymbol = 0;
+            foreach (byte b in element)
             {
-                if (!position.Next.ContainsKey(c))
+                if (!position.Next.ContainsKey(b))
                 {
                     return false;
                 }
@@ -80,9 +80,9 @@ public class Trie
                 if (position.IsTerminal)
                 {
                     lastWord = position;
-                    nextSymbol = c;
+                    nextSymbol = b;
                 }
-                position = position.Next[c];
+                position = position.Next[b];
             }
 
             if (!position.IsTerminal)
@@ -91,10 +91,10 @@ public class Trie
             }
             
             position = Head;
-            foreach (char c in element)
+            foreach (byte b in element)
             {
                 --position.NumberOfWords;
-                position = position.Next[c];
+                position = position.Next[b];
             }
 
             --position.NumberOfWords;
@@ -108,17 +108,17 @@ public class Trie
             return true;
         }
 
-        public int HowManyStartsWithPrefix(String prefix)
+        public int HowManyStartsWithPrefix(byte[] prefix)
         {
             Node position = Head;
-            foreach (char c in prefix)
+            foreach (byte b in prefix)
             {
-                if (!position.Next.ContainsKey(c))
+                if (!position.Next.ContainsKey(b))
                 {
                     return 0;
                 }
 
-                position = position.Next[c];
+                position = position.Next[b];
             }
             return position.NumberOfWords;
         }
