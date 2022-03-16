@@ -1,4 +1,6 @@
-﻿namespace LZW.Solution;
+﻿using System.Collections;
+
+namespace LZW.Solution;
 
 internal class Program
 {
@@ -64,6 +66,9 @@ internal class Program
     
     public static void Main(string[] args)
     {
+        BitArray myArray = new BitArray(8);
+        myArray.Set(5, true);
+        myArray.Length = 9;
         InteractWithUser();
         //byte[] arrayBytes = File.ReadAllBytes("/home/niksen111/spbuProgHomeworkSem2/3Homework03.03.22/LZW/LZW/Tests/NewFile1.txt");
     }
