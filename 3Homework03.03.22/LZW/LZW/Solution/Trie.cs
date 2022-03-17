@@ -1,6 +1,6 @@
 using System.Collections;
-
 namespace LZW.Solution;
+#nullable disable
 
 public class Trie
     {
@@ -10,10 +10,11 @@ public class Trie
             {
                 Next = new Dictionary<byte, Node>();
             }
+            
             public short NumberOfWords;
             public BitArray Code;
             public bool IsTerminal;
-            public Dictionary<byte, Node> Next;
+            public Dictionary<byte, Node> Next { get; }
         }
         public Trie()
         {
@@ -29,7 +30,7 @@ public class Trie
 
         public int Size => Head.NumberOfWords;
         public int GetDictionarySize => _dictionarySize;
-
+        public BitArray GetCurrentCode => _currentPosition.Code;
         private void Increase_currentCode()
         {
             if (!_currentCode[0])
@@ -43,7 +44,7 @@ public class Trie
             {
                 _currentCode.Set(position, !_currentCode[position]);
                 ++position;
-                if (_currentCode[position])
+                if (_currentCode[position - 1])
                 {
                     transport = false;
                 }
@@ -74,7 +75,7 @@ public class Trie
             }
             Node newNode = new Node();
             _currentPosition.Next.Add(b, newNode);
-            newNode.Next[b].Code = new BitArray(_currentCode);
+            _currentPosition.Next[b].Code = new BitArray(_currentCode);
             newNode.IsTerminal = true;
             Increase_currentCode();
             Node position = _currentPosition;

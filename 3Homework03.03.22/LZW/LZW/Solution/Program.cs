@@ -14,6 +14,7 @@ internal class Program
     private static void InteractWithUser()
     {
         Console.WriteLine("Hello!");
+        Console.WriteLine();
         ShowCommands();
         CompressorLZW compressor = new CompressorLZW();
         while (true)
@@ -66,10 +67,11 @@ internal class Program
     
     public static void Main(string[] args)
     {
-        BitArray myArray = new BitArray(8);
-        myArray.Set(5, true);
-        myArray.Length = 9;
+        // BitArray myArray = new BitArray(8);
+        // myArray.Set(5, true);
+        // myArray.Length = 9;
+        // myArray.RightShift(1);
+        // Console.WriteLine("{0}", myArray.Length);
         InteractWithUser();
-        //byte[] arrayBytes = File.ReadAllBytes("/home/niksen111/spbuProgHomeworkSem2/3Homework03.03.22/LZW/LZW/Tests/NewFile1.txt");
     }
 } 
