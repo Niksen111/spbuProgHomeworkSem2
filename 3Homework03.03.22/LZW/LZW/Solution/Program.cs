@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace LZW.Solution;
+﻿namespace LZW.Solution;
 
 internal class Program
 {

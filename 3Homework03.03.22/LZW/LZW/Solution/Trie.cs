@@ -38,6 +38,8 @@ public class Trie
                 _currentCode.Set(0, true);
                 return;
             }
+
+            _currentCode.Set(0, false);
             bool transport = true;
             int position = 1;
             while (transport && position < _currentCode.Length)
@@ -66,13 +68,15 @@ public class Trie
             }
         }
 
-        public BitArray? AddGradually(byte b)
+        public BitArray AddGradually(byte b)
         {
             if (_currentPosition.Next.ContainsKey(b))
             {
                 _currentPosition = _currentPosition.Next[b];
                 return null;
             }
+
+            ++_dictionarySize;
             Node newNode = new Node();
             _currentPosition.Next.Add(b, newNode);
             _currentPosition.Next[b].Code = new BitArray(_currentCode);
