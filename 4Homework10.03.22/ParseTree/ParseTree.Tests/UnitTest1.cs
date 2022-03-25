@@ -1,7 +1,6 @@
 using NUnit.Framework;
-
 namespace ParseTree.Tests;
-
+using Solution;
 public class Tests
 {
     [SetUp]
@@ -12,6 +11,8 @@ public class Tests
     [Test]
     public void Test1()
     {
-        Assert.Pass();
+        ParseTree x = new ParseTree();
+        int m = x.X;
+        Assert.AreEqual(m, 0);
     }
 }
