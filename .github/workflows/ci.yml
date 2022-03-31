@@ -1,0 +1,14 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build-Ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: action/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-cersion: '6.x'
+    - name: Build
+      run: for file in `find ./ -type f -name "*.sln"`; do dotnet build; done
+    - name: Tests
+      run: for file in `find ./ -type f -name "*.sln"`; do dotnet test; done
