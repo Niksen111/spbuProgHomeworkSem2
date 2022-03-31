@@ -4,7 +4,7 @@ jobs:
   build-Ubuntu:
     runs-on: ubuntu-latest
     steps:
-    - uses: action/checkout@v2
+    - uses: actions/checkout@v2
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-cersion: '6.x'
