@@ -3,7 +3,7 @@ namespace UniqueList;
 
 public class MyList
 {
-    private class ListElement
+    protected class ListElement
     {
         public ListElement(int value, ListElement? next)
         {
@@ -16,33 +16,33 @@ public class MyList
 
     public MyList()
     {
-        _head = new ListElement(0, null);
-        _lastElement = _head;
-        _length = 0;
+        Head = new ListElement(0, null);
+        LastElement = Head;
+        length = 0;
     }
     
-    private readonly ListElement _head;
-    private ListElement _lastElement;
-    private int _length;
-    public int Length => _length;
+    protected readonly ListElement Head;
+    protected ListElement LastElement;
+    protected int length;
+    public int Length => length;
 
-    public void Add(int value)
+    public virtual void Add(int value)
     {
-        ++_length;
+        ++length;
         ListElement newListElement = new ListElement(value, null);
-        _lastElement.Next = newListElement;
-        _lastElement = newListElement;
+        LastElement.Next = newListElement;
+        LastElement = newListElement;
     }
     
-    public void Insert(int value, int index)
+    public virtual void Insert(int value, int index)
     {
         if (index > Length || index < 0)
         {
             throw new IndexOutOfRangeException();
         }
         
-        ++_length;
-        ListElement position = _head;
+        ++length;
+        ListElement position = Head;
         for (int i = 0; i < index; ++i)
         {
             position = position.Next!;
@@ -58,7 +58,7 @@ public class MyList
         {
             throw new IndexOutOfRangeException();
         }
-        ListElement position = _head;
+        ListElement position = Head;
         for (int i = 0; i < index + 1; ++i)
         {
             position = position.Next!;
@@ -71,11 +71,11 @@ public class MyList
     {
         if (index >= Length || index < 0)
         {
-            throw new IndexOutOfRangeException();
+            throw new RemoveNonExistentElementException();
         }
         
-        --_length;
-        ListElement position = _head;
+        --length;
+        ListElement position = Head;
         for (int i = 0; i < index; ++i)
         {
             position = position.Next!;
@@ -93,7 +93,7 @@ public class MyList
             throw new IndexOutOfRangeException();
         }
         
-        ListElement position = _head;
+        ListElement position = Head;
         for (int i = 0; i < index; ++i)
         {
             if (position.Next != null)
