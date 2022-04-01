@@ -1,4 +1,4 @@
-namespace Bor.Solution;
+namespace Trie;
 
 public class Trie
     {
