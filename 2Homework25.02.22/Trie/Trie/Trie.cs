@@ -19,8 +19,16 @@ public class Trie
 
         private Node Head;
 
+        /// <summary>
+        /// Number of words in the trie
+        /// </summary>
         public int Size => Head.NumberOfWords;
         
+        /// <summary>
+        /// Added a string to the trie
+        /// </summary>
+        /// <param name="element">addable element</param>
+        /// <returns>true if didn't contain the string before</returns>
         public bool Add(string element)
         {
             Node position = Head;
@@ -49,7 +57,12 @@ public class Trie
             position.IsTerminal = true;
             return result;
         }
-
+        
+        /// <summary>
+        /// Checks if the trie contains the line
+        /// </summary>
+        /// <param name="element">element being checked</param>
+        /// <returns>true if contained the line before</returns>
         public bool Contains(string element)
         {
             Node position = Head;
@@ -64,7 +77,11 @@ public class Trie
             }
             return position.IsTerminal;
         }
-
+        /// <summary>
+        /// Removes the element
+        /// </summary>
+        /// <param name="element">removable element</param>
+        /// <returns>true if the element did contained</returns>
         public bool Remove(string element)
         {
             Node position = Head;
@@ -107,7 +124,9 @@ public class Trie
             lastWord.Next.Remove(nextSymbol);
             return true;
         }
-
+        /// <summary>number of the elements</summary>
+        /// <param name="prefix">the prefix</param>
+        /// <returns>number of words starts with the prefix</returns>
         public int HowManyStartsWithPrefix(String prefix)
         {
             Node position = Head;
