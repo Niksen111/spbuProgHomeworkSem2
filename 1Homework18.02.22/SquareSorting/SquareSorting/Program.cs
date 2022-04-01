@@ -4,6 +4,11 @@ namespace SquareSorting
 {
     internal class Program
     {
+        /// <summary>
+        /// Checks if an array is sorted
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
         private static bool AreArraySorted(int[] array)
         {
             for (int i = 0; i < array.Length - 1; ++i)
@@ -16,12 +21,21 @@ namespace SquareSorting
 
             return true;
         }
+        /// <summary>
+        /// Swaps two integer elements
+        /// </summary>
+        /// <param name="firstVariable"></param>
+        /// <param name="secondVariable"></param>
         private static void Swap(ref int firstVariable, ref int secondVariable)
         {
             firstVariable ^= secondVariable;
             secondVariable ^= firstVariable;
             firstVariable ^= secondVariable;
         }
+        /// <summary>
+        /// Sorts an array by Bubble sorting
+        /// </summary>
+        /// <param name="array"></param>
         private static void SortByBubble(int[] array)
         {
             for (int i = 0; i < array.Length; ++i)
