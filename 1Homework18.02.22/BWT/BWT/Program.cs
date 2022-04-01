@@ -30,9 +30,16 @@ namespace BWT
             return true;
         }
         
-        // Using heap sorting sorts a segment of the array,
-        // which is a list of indexes of the characters of the transmitted word
-        // Shift - the index of the character in the words, by which the sorting is currently performed
+
+        /// <summary>
+        /// Using heap sorting sorts a segment of the array,
+        /// which is a list of indexes of the characters of the transmitted word
+        /// </summary>
+        /// <param name="arrayIndexes">sortable array</param>
+        /// <param name="line">method where the line shifts are taken</param>
+        /// <param name="shift">the index of the character in the words, by which the sorting is currently performed</param>
+        /// <param name="start">start index</param>
+        /// <param name="end">end index</param>
         private static void HeapSort(int[] arrayIndexes, string line, int shift, int start, int end)
         {
             for (int i = start + 1; i <= end; ++i)
@@ -102,7 +109,16 @@ namespace BWT
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Using Insertion sorting sorts a segment of the array,
+        /// which is a list of indexes of the characters of the transmitted word
+        /// </summary>
+        /// <param name="arrayIndexes">sortable array</param>
+        /// <param name="line">method where the line shifts are taken</param>
+        /// <param name="shift">the index of the character in the words, by which the sorting is currently performed</param>
+        /// <param name="start">start index</param>
+        /// <param name="end">end index</param>
         private static void InsertionSort(int[] arrayIndexes, string line, int shift, int start, int end)
         {
             for (int i = start + 1; i <= end; ++i)
@@ -117,7 +133,14 @@ namespace BWT
                 }
             }
         }
-
+        /// <summary>
+        /// Sorts a segment of the array,
+        /// </summary>
+        /// <param name="arrayIndexes">sortable array</param>
+        /// <param name="line">method where the line shifts are taken</param>
+        /// <param name="shift">the index of the character in the words, by which the sorting is currently performed</param>
+        /// <param name="start">start index</param>
+        /// <param name="end">end index</param>
         private static void SortLines(int[] arrayIndexes, string line, int shift, int start, int end)
         {
             if (start >= end || shift >= line.Length)
@@ -138,6 +161,11 @@ namespace BWT
             }
             SortLines(arrayIndexes, line, shift + 1, begin, end);
         }
+        /// <summary>
+        /// Burrows-Wheeler Transform
+        /// </summary>
+        /// <param name="line">transformable line</param>
+        /// <returns>transformed line and index of the source line</returns>
         private static (string, int) BWT(string line)
         {
             int[] arrayIndexes = new int[line.Length];
@@ -160,10 +188,15 @@ namespace BWT
             }
             return (new string(result), key);
         }
-
+        /// <summary>
+        /// Inverse Burrows-Wheeler Transform
+        /// </summary>
+        /// <param name="line">transformable line</param>
+        /// <param name="key">index of the source line</param>
+        /// <returns>retrieved line</returns>
         private static string InverseBWT(string line, int key)
         {
-            if (line == null || line.Length == 0)
+            if (String.IsNullOrEmpty(line))
             {
                 return line;
             }
