@@ -1,5 +1,6 @@
-namespace StackCalculator.Solution;
+using StackCalculator;
 
+namespace StackCalculator;
 public class ArrayStack : IStack
 {
     public ArrayStack()

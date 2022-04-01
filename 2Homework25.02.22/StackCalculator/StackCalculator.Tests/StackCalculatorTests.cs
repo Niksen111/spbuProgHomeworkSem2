@@ -1,17 +1,17 @@
+using System;
 using NUnit.Framework;
-using StackCalculator.Solution;
 
 namespace StackCalculator.Tests;
 
 [TestFixture]
 public class StackCalculatorTests
 {
-    private Solution.StackCalculator _calculator = new Solution.StackCalculator();
+    private StackCalculator _calculator = new StackCalculator();
     
     [SetUp]
     public void Setup()
     {
-        _calculator = new Solution.StackCalculator();
+        _calculator = new StackCalculator();
     }
 
     [Test]
@@ -22,7 +22,7 @@ public class StackCalculatorTests
         {
             Assert.Fail();
         }
-        float result = (float) _calculator.CalculateExpression(expression);
+        float result = (float) _calculator.CalculateExpression(expression)!;
         Assert.IsTrue(Math.Abs(result + 4.1176) < 0.0001);
     }
 

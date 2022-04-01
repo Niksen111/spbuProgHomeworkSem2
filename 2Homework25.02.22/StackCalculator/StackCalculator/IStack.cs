@@ -1,4 +1,4 @@
-namespace StackCalculator.Solution;
+namespace StackCalculator;
 
 public interface IStack
 {

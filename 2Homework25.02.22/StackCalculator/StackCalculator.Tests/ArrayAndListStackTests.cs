@@ -1,5 +1,6 @@
+using System;
+using System.Collections.Generic;
 using NUnit.Framework;
-using StackCalculator.Solution;
 
 namespace StackCalculator.Tests;
 
