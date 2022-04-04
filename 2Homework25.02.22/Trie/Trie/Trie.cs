@@ -1,5 +1,8 @@
 namespace Trie;
 
+/// <summary>
+/// data structure for storing a set of strings
+/// </summary>
 public class Trie
     {
         private class Node
@@ -77,6 +80,7 @@ public class Trie
             }
             return position.IsTerminal;
         }
+        
         /// <summary>
         /// Removes the element
         /// </summary>
