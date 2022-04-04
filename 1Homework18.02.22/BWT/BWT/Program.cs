@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// 
+/// BWT
 /// </summary>
 internal class Program
 {
