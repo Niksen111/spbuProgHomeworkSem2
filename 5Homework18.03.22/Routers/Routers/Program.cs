@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Routers;
 
-Console.WriteLine("Hello, World!");
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+    }
+}
