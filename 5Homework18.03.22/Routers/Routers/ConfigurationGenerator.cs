@@ -1,5 +1,3 @@
-using System.Collections;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualBasic;
 
 namespace Routers;
@@ -8,13 +6,17 @@ public class ConfigurationGenerator : IConfigurationGenerator
 {
     public ConfigurationGenerator(string path)
     {
-        _topology = new SortedList<int, (int, int)>();
+        _topology = new List<(int, int, int)>();
+        _resultTopology = new SortedList<int, int>[1];
         GenerateConfig(path);
     }
 
-    private SortedList<int, (int, int)> _topology;
-    private int _numberNodes;
-    private List<(int, int)>[] _resultTopology;
+    private List<(int, int, int)> _topology;
+    private int _nodesNumber;
+    private SortedList<int, int>[] _resultTopology;
+    private int _sumOfCapacities;
+    public int SumOfCapacities => _sumOfCapacities;
+
     private void GetTopology(string path)
     {
         _topology.Clear();
@@ -25,7 +27,7 @@ public class ConfigurationGenerator : IConfigurationGenerator
             {
                 continue;
             }
-            var numbersInLine = Strings.Split(Strings.Replace(line, @",():", "")).Select(x => int.Parse(x)).ToArray();
+            var numbersInLine = Strings.Split(line.Replace( ": ", " ").Replace( " (", " ").Replace( ")", "").Replace(",", "")).Select(x => int.Parse(x)).ToArray();
             if (numbersInLine.Length % 2 == 0)
             {
                 throw new InputDataException();
@@ -38,30 +40,71 @@ public class ConfigurationGenerator : IConfigurationGenerator
                     throw new InputDataException();
                 }
 
-                if (Math.Max(Math.Max(numbersInLine[i], numbersInLine[i + 1]), numbersInLine[0]) > _numberNodes)
+                if (Math.Max(numbersInLine[i], numbersInLine[0]) > _nodesNumber)
                 {
-                    _numberNodes = Math.Max(Math.Max(numbersInLine[i], numbersInLine[i + 1]), numbersInLine[0]);
+                    _nodesNumber = Math.Max(numbersInLine[i], numbersInLine[0]);
                 }
-                _topology.Add(-numbersInLine[i + 1], (numbersInLine[0], numbersInLine[i]));
+                _topology.Add((-numbersInLine[i + 1], numbersInLine[0] - 1, numbersInLine[i] - 1));
             }
         }
     }
     public void GenerateConfig(string path)
     {
         GetTopology(path);
-        var addedNodes = new bool[_numberNodes];
-        _resultTopology = new List<(int, int)>[_numberNodes];
+        _topology.Sort(delegate((int, int ,int) x, (int, int, int) y)
+        {
+            if (x.Item1 == y.Item1) return 0;
+            else if (x.Item1 < y.Item1) return -1;
+            else return 1;
+        });
+        var connectivityComponents = new int[_nodesNumber];
+        _resultTopology = new SortedList<int, int>[_nodesNumber];
+        for (int i = 0; i < _nodesNumber; ++i)
+        {
+            connectivityComponents[i] = i + 1;
+            _resultTopology[i] = new SortedList<int, int>();
+        }
         foreach (var edge in _topology)
         {
-            if (!addedNodes[edge.Value.Item1] && !addedNodes[edge.Value.Item2])
+            if (connectivityComponents[edge.Item2] != connectivityComponents[edge.Item3])
             {
-                _resultTopology[edge.Value.Item1].Add((edge.Value.Item2, edge.Key));
+                _resultTopology[edge.Item2].Add(edge.Item3, -edge.Item1);
+                _sumOfCapacities += -edge.Item1;
+                int node2Value = connectivityComponents[edge.Item3];
+                for (int i = 0; i < _nodesNumber; ++i)
+                {
+                    if (connectivityComponents[i] == node2Value)
+                    {
+                        connectivityComponents[i] = connectivityComponents[edge.Item2];
+                    }
+                }
             }
         }
     }
 
     public void PrintConfigToFile(string path)
     {
-        
+        StreamWriter file = new StreamWriter(path);
+        for (int i = 0; i < _nodesNumber; ++i)
+        {
+            if (_resultTopology[i].Count > 0)
+            {
+                file.Write($"{i+1}: ");
+
+                int j = 0;
+                foreach (var element in _resultTopology[i])
+                {
+                    if (j != 0)
+                    {
+                        file.Write(", ");
+                    }
+                    file.Write($"{element.Key + 1} ({element.Value})");
+                    ++j;
+                }
+                file.WriteLine();
+
+            }
+        }
+        file.Close();
     }
 }
