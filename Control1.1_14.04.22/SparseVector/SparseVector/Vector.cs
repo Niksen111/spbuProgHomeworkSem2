@@ -69,10 +69,7 @@ public class Vector : IVector
 
         for (int i = 0; i < _myLength; ++i)
         {
-            if (_vector.ContainsKey(i))
-            {
-               
-            }
+            ChangePosition(i, GetPosition(i) + vector.GetPosition(i));
         }
     }
 
@@ -81,6 +78,10 @@ public class Vector : IVector
         if (vector.Length != _myLength)
         {
             throw new IndexOutOfRangeException();
+        }
+        for (int i = 0; i < _myLength; ++i)
+        {
+            ChangePosition(i, GetPosition(i) - vector.GetPosition(i));
         }
     }
 
