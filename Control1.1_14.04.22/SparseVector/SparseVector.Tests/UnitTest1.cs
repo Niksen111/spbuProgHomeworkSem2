@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace SparseVector.Tests;
@@ -60,5 +61,19 @@ public class Tests
             }
         }
         Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void DotProductWorks()
+    {
+        IVector vector1 = new Vector(new []{1, 2},2);
+        IVector vector2 = new Vector(new []{3, 4},2);
+        Assert.IsTrue(vector1.DotProduct(vector2) == 11);
+    }
+
+    [Test]
+    public void ThrowsException()
+    {
+        Assert.Throws<IndexOutOfRangeException>(() => new Vector(new[] {1, 2, 3}, 2));
     }
 }
