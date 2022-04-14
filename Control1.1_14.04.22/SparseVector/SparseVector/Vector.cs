@@ -27,7 +27,7 @@ public class Vector : IVector
     
     private Dictionary<int, int> _vector;
 
-    public void ChangePosition(int index, int newValue)
+    public void SetPosition(int index, int newValue)
     {
         if (index >= _myLength)
         {
@@ -74,7 +74,7 @@ public class Vector : IVector
 
         for (int i = 0; i < _myLength; ++i)
         {
-            ChangePosition(i, GetPosition(i) + vector.GetPosition(i));
+            SetPosition(i, GetPosition(i) + vector.GetPosition(i));
         }
     }
 
@@ -86,7 +86,7 @@ public class Vector : IVector
         }
         for (int i = 0; i < _myLength; ++i)
         {
-            ChangePosition(i, GetPosition(i) - vector.GetPosition(i));
+            SetPosition(i, GetPosition(i) - vector.GetPosition(i));
         }
     }
 
@@ -108,6 +108,19 @@ public class Vector : IVector
             result += GetPosition(i) * vector.GetPosition(i);
         }
         
+        return result;
+    }
+
+    public int[] ToArray()
+    {
+        var result = new int[_myLength];
+        var currentPair = _vector.GetEnumerator();
+        result[currentPair.Current.Key] = currentPair.Current.Value;
+        while (currentPair.MoveNext())
+        {
+            result[currentPair.Current.Key] = currentPair.Current.Value;
+        }
+        currentPair.Dispose();
         return result;
     }
 }

@@ -11,7 +11,7 @@ public interface IVector
     /// </summary>
     /// <param name="index">the index</param>
     /// <param name="newValue">new vector value</param>
-    public void ChangePosition(int index, int newValue);
+    public void SetPosition(int index, int newValue);
     
     /// <param name="index">the index</param>
     /// <returns>value of the position by the index</returns>
@@ -46,4 +46,7 @@ public interface IVector
     /// <param name="vector">second multiply vector</param>
     /// <returns>dot product</returns>
     public int DotProduct(IVector vector);
+    
+    /// <returns>vector converted to an int array</returns>
+    public int[] ToArray();
 }
