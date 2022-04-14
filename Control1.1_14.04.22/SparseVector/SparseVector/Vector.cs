@@ -36,12 +36,17 @@ public class Vector : IVector
 
         if (_vector.ContainsKey(index))
         {
-            _vector[index] = newValue;
-
+            if (newValue != 0)
+            {
+                _vector[index] = newValue;
+            }
         }
         else
         {
-            _vector.Add(index, newValue);
+            if (newValue != 0)
+            {
+                _vector.Add(index, newValue);
+            }
         }
     }
 
