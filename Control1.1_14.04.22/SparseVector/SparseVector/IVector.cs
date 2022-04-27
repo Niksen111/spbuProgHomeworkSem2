@@ -5,6 +5,15 @@ namespace SparseVector;
 /// </summary>
 public interface IVector
 {
+    /// <summary>
+    /// index length of the vector
+    /// </summary>
+    public int Length { get; }
+    
+    /// <summary>
+    /// returns true if the vector is null
+    /// </summary>
+    public bool IsNull { get; }
     
     /// <summary>
     /// changes the vector value by the index
@@ -30,16 +39,6 @@ public interface IVector
     public void Subtract(IVector vector);
 
     /// <summary>
-    /// index length of the vector
-    /// </summary>
-    public int Length { get; }
-    
-    /// <summary>
-    /// returns true if the vector is null
-    /// </summary>
-    public bool IsNull { get; }
-
-    /// <summary>
     /// takes two equal-length sequences of numbers and returns a number
     /// dot product
     /// </summary>
@@ -47,6 +46,9 @@ public interface IVector
     /// <returns>dot product</returns>
     public int DotProduct(IVector vector);
     
+    /// <returns>List of pairs - (index, non-zero element)</returns>
+    public List<(int, int)> GetNotNullPositions();
+
     /// <returns>vector converted to an int array</returns>
     public int[] ToArray();
 }

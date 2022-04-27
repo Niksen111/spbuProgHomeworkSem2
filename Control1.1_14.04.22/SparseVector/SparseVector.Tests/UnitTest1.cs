@@ -9,32 +9,31 @@ public class Tests
     public void VectorCreatedWithLength()
     {
         IVector myVector = new Vector(10);
-        Assert.IsTrue(myVector.Length == 10);
+        Assert.AreEqual(myVector.Length, 10);
     }
 
     [Test]
     public void VectorCreatedUsingArray()
     {
         IVector myVector = new Vector(new []{5, 3, 0, 1, 0},10);
-        Assert.Pass();
     }
 
     [Test]
     public void PositionChangesAndReturns()
     {
-        IVector myVector = new Vector(new []{5, 3, 0, 1, 0},10);
-        bool result = myVector.GetPosition(1) == 3;
+        IVector myVector = new Vector(new []{5, 3, 0, 1, 0}, 10);
+        Assert.AreEqual(myVector.GetPosition(1), 3);
         myVector.SetPosition(1, 2);
-        Assert.IsTrue(result && myVector.GetPosition(1) == 2);
+        Assert.AreEqual(myVector.GetPosition(1), 2);
     }
 
     [Test]
     public void NullVectorIsNullAndNotNullVectorIsNotNull()
     {
         IVector myVector = new Vector(10);
-        bool result = myVector.IsNull;
+        Assert.IsTrue(myVector.IsNull);
         myVector.SetPosition(2, 5);
-        Assert.IsTrue(result && !myVector.IsNull);
+        Assert.IsTrue(!myVector.IsNull);
     }
 
     [Test]
@@ -44,23 +43,22 @@ public class Tests
         vector.SetPosition(2, 5);
         vector.SetPosition(5, -345);
         var convertedVector = vector.ToArray();
-        bool result = convertedVector.Length == vector.Length;
+        Assert.AreEqual(convertedVector.Length, vector.Length);
         for (int i = 0; i < convertedVector.Length; ++i)
         {
             if (i == 2)
             {
-                result = result && convertedVector[i] == 5;
+                Assert.AreEqual(convertedVector[i], 5);
             }
             else if (i == 5)
             {
-                result = result && convertedVector[i] == -345;
+                Assert.AreEqual(convertedVector[i], -345);
             }
             else
             {
-                result = result && convertedVector[i] == 0;
+                Assert.AreEqual(convertedVector[i], 0);
             }
         }
-        Assert.IsTrue(result);
     }
 
     [Test]
@@ -68,7 +66,7 @@ public class Tests
     {
         IVector vector1 = new Vector(new []{1, 2},2);
         IVector vector2 = new Vector(new []{3, 4},2);
-        Assert.IsTrue(vector1.DotProduct(vector2) == 11);
+        Assert.AreEqual(vector1.DotProduct(vector2), 11);
     }
 
     [Test]

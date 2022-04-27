@@ -1,11 +1,14 @@
 namespace SparseVector;
 
+/// <summary>
+/// Sparse Vector
+/// </summary>
 public class Vector : IVector
 {
     public Vector(int length)
     {
         _vector = new Dictionary<int, int>();
-        _myLength = length;
+        _length = length;
     }
 
     public Vector(int[] array, int length)
@@ -22,14 +25,20 @@ public class Vector : IVector
                 _vector.Add(i, array[i]);
             }
         }
-        _myLength = length;
+        _length = length;
     }
+    
+    
+    private readonly int _length;
+    public int Length => _length;
+
+    public bool IsNull => _vector.Count == 0;
     
     private Dictionary<int, int> _vector;
 
     public void SetPosition(int index, int newValue)
     {
-        if (index >= _myLength)
+        if (index >= _length)
         {
             throw new IndexOutOfRangeException();
         }
@@ -39,6 +48,10 @@ public class Vector : IVector
             if (newValue != 0)
             {
                 _vector[index] = newValue;
+            }
+            else
+            {
+                _vector.Remove(index);
             }
         }
         else
@@ -52,7 +65,7 @@ public class Vector : IVector
 
     public int GetPosition(int index)
     {
-        if (index >= _myLength)
+        if (index >= _length)
         {
             throw new IndexOutOfRangeException();
         }
@@ -67,60 +80,66 @@ public class Vector : IVector
 
     public void Add(IVector vector)
     {
-        if (vector.Length != _myLength)
+        if (vector.Length != _length)
         {
             throw new IndexOutOfRangeException();
         }
 
-        for (int i = 0; i < _myLength; ++i)
+        var vectorWithoutNulls = vector.GetNotNullPositions();
+        foreach (var element in vectorWithoutNulls)
         {
-            SetPosition(i, GetPosition(i) + vector.GetPosition(i));
+            SetPosition(element.Item1, GetPosition(element.Item1) + element.Item2);
         }
     }
 
     public void Subtract(IVector vector)
     {
-        if (vector.Length != _myLength)
+        if (vector.Length != _length)
         {
             throw new IndexOutOfRangeException();
         }
-        for (int i = 0; i < _myLength; ++i)
+        
+        var vectorWithoutNulls = vector.GetNotNullPositions();
+        foreach (var element in vectorWithoutNulls)
         {
-            SetPosition(i, GetPosition(i) - vector.GetPosition(i));
+            SetPosition(element.Item1, GetPosition(element.Item1) - element.Item2);
         }
     }
 
-    private readonly int _myLength;
-    public int Length => _myLength;
-
-    public bool IsNull => _vector.Count == 0;
-
     public int DotProduct(IVector vector)
     {
-        if (vector.Length != _myLength)
+        if (vector.Length != _length)
         {
             throw new IndexOutOfRangeException();
         }
 
         int result = 0;
-        for (int i = 0; i < _myLength; ++i)
+        foreach (var element in _vector)
         {
-            result += GetPosition(i) * vector.GetPosition(i);
+            result += element.Value * vector.GetPosition(element.Key);
         }
         
         return result;
     }
 
+    public List<(int, int)> GetNotNullPositions()
+    {
+        List<(int, int)> list = new List<(int, int)>();
+        foreach (var element in _vector)
+        {
+            list.Add((element.Key, element.Value));
+        }
+
+        return list;
+    }
+
     public int[] ToArray()
     {
-        var result = new int[_myLength];
-        var currentPair = _vector.GetEnumerator();
-        result[currentPair.Current.Key] = currentPair.Current.Value;
-        while (currentPair.MoveNext())
+        var result = new int[_length];
+        foreach (var element in _vector)
         {
-            result[currentPair.Current.Key] = currentPair.Current.Value;
+            result[element.Key] = element.Value;
         }
-        currentPair.Dispose();
         return result;
     }
 }
