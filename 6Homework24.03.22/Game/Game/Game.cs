@@ -5,7 +5,6 @@ public class Game
     public Game()
     {
         _currentPosition = (5, 20);
-        _lastMove = (0, 0);
         _fieldSize = (12, 42);
     }
     
@@ -16,19 +15,21 @@ public class Game
 
     private void Move(int x, int y)
     {
-        if (_currentPosition.Item2 + x <= 0 || _currentPosition.Item2 + x >= _fieldSize.Item2 - 1 
+        if (_currentPosition.Item2 + x <= 0 || _currentPosition.Item2 + x >= _fieldSize.Item2 
                                             || _currentPosition.Item1 + y < 0 ||
                                             _currentPosition.Item1 + y >= _fieldSize.Item1 - 1)
         {
             return;
         }
         Console.SetCursorPosition(_currentPosition.Item2 - _lastMove.Item1, _currentPosition.Item1 - _lastMove.Item2);
-        Console.Write(" ");
+        Console.Write(' ');
+        Console.SetCursorPosition(_currentPosition.Item2, _currentPosition.Item1);
+        Console.Write(' ');
         Console.SetCursorPosition(_currentPosition.Item2 + x, _currentPosition.Item1 + y);
         _currentPosition.Item2 += x;
         _currentPosition.Item1 += y;
         _lastMove = (x, y);
-        Console.Write("@");
+        Console.Write('@');
     }
 
     public void Up(object sender, EventArgs args)
