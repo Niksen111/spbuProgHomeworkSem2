@@ -32,4 +32,13 @@ public class Tests
         Assert.IsTrue(Sorter<int>.AreListSorted(new List<int> {2, 4, 6, 1, 3, 5}, new MyComparer<int>((first, second) =>
             second % 2 - first % 2)));
     }
+
+    [Test]
+    public void SorterSortsSimpleTest()
+    {
+        Assert.IsTrue(Sorter<int>.AreListSorted(Sorter<int>.SortByBubble(
+            new List<int>{9, 4, 6, 2, 5, 2}, 
+            new MyComparer<int>((first, second) => second - first)),
+            new MyComparer<int>((first, second) => second - first)));
+    }
 }

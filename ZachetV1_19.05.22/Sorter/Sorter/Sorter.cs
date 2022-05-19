@@ -6,13 +6,7 @@
 /// <typeparam name="T">comparison function</typeparam>
 public static class Sorter<T>
 {
-    private static void Swap(T firstObject, T secondObject)
-    {
-        T temporaryObject = firstObject;
-        firstObject = secondObject;
-        secondObject = firstObject;
-    }
-    
+
     /// <summary>
     /// Sorts the list of objects by the given comparison function
     /// </summary>
@@ -27,7 +21,7 @@ public static class Sorter<T>
             {
                 if (comparer.Compare(list[j], list[j + 1]) < 0)
                 {
-                    Swap(list[j], list[j + 1]);
+                    (list[j], list[j + 1]) = (list[j + 1], list[j]);
                 }
             }
         }
