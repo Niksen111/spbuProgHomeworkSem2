@@ -21,17 +21,21 @@ public class MyCalculator
         switch (_operation)
         {
             case '+':
-                return (float.Parse(_firstNumber) + float.Parse(_secondNumber)).ToString();
+                return (float.Parse(_firstNumber) + float.Parse(_secondNumber) >= 0 ? "+" : "") 
+                    + (float.Parse(_firstNumber) + float.Parse(_secondNumber)).ToString();
             case '-':
-                return (float.Parse(_firstNumber) - float.Parse(_secondNumber)).ToString();
+                return (float.Parse(_firstNumber) - float.Parse(_secondNumber) >= 0 ? "+" : "")
+                    + (float.Parse(_firstNumber) - float.Parse(_secondNumber)).ToString();
             case '*':
-                return (float.Parse(_firstNumber) * float.Parse(_secondNumber)).ToString();
+                return (float.Parse(_firstNumber) * float.Parse(_secondNumber) >= 0 ? "+" : "")
+                    + (float.Parse(_firstNumber) * float.Parse(_secondNumber)).ToString();
             case '/':
                 if (float.Parse(_secondNumber) < 0.000000001 && _secondNumber[0] == '+')
                 {
                     throw new DivideByZeroException();
                 }
-                return (float.Parse(_firstNumber) / float.Parse(_secondNumber)).ToString();
+                return (float.Parse(_firstNumber) / float.Parse(_secondNumber) >= 0 ? "+" : "")
+                    + (float.Parse(_firstNumber) / float.Parse(_secondNumber)).ToString();
             default:
                 throw new InvalidOperationException();
         }
@@ -61,7 +65,7 @@ public class MyCalculator
                 {
                     if (_firstNumber.Length > 18)
                     {
-                        return _firstNumber;
+                        return float.Parse(_firstNumber).ToString();
                     }
                     if (!(_firstNumber.Length == 2 && action == '0'))
                     {
@@ -85,7 +89,7 @@ public class MyCalculator
                     _state = 5;
                 }
 
-                return _firstNumber;
+                return float.Parse(_firstNumber).ToString();
 
             case 2:
                 if (new List<char> { '+', '-', '*', '/' }.Contains(action))
@@ -98,7 +102,7 @@ public class MyCalculator
                 {
                     if (_firstNumber.Length > 18)
                     {
-                        return _firstNumber;
+                        return float.Parse(_firstNumber).ToString();
                     }
                     if (!(_firstNumber.Length == 2 && action == '0'))
                     {
@@ -117,7 +121,7 @@ public class MyCalculator
                     _state = 5;
                 }
 
-                return _firstNumber;
+                return float.Parse(_firstNumber).ToString();
 
             case 3:
                 if (new List<char> { '+', '-', '*', '/' }.Contains(action))
@@ -142,7 +146,7 @@ public class MyCalculator
                 {
                     if (_secondNumber.Length > 18)
                     {
-                        return _secondNumber;
+                        return float.Parse(_secondNumber).ToString();
                     }
                     if (!(_secondNumber.Length == 2 && action == '0'))
                     {
@@ -177,10 +181,10 @@ public class MyCalculator
                         return "Divided by zero :(";
                     }
                     _secondNumber = "+0";
-                    return _firstNumber;
+                    return float.Parse(_firstNumber).ToString();
                 }
 
-                return _secondNumber;
+                return float.Parse(_secondNumber).ToString();
 
             case 4:
                 if (new List<char> { '+', '-', '*', '/' }.Contains(action))
@@ -206,7 +210,7 @@ public class MyCalculator
                 {
                     if (_secondNumber.Length > 18)
                     {
-                        return _secondNumber;
+                        return float.Parse(_secondNumber).ToString();
                     }
                     if (!(_secondNumber.Length == 2 && action == '0'))
                     {
@@ -236,10 +240,10 @@ public class MyCalculator
                         return "Divided by zero :(";
                     }
                     _secondNumber = "+0";
-                    return _firstNumber;
+                    return float.Parse(_firstNumber).ToString();
                 }
 
-                return _secondNumber;
+                return float.Parse(_secondNumber).ToString();
 
             case 5:
                 if (new List<char> { '+', '-', '*', '/' }.Contains(action))
@@ -252,7 +256,7 @@ public class MyCalculator
                 {
                     // ---------------
                     _firstNumber = _firstNumber.Replace(_firstNumber[0], _firstNumber[0] == '+' ? '-' : '+');
-                    return _firstNumber;
+                    return float.Parse(_firstNumber).ToString();
                 }
                 else if (action >= '0' && action <= '9')
                 {
@@ -267,10 +271,10 @@ public class MyCalculator
                     return "0,";
                 }
 
-                return _firstNumber;
+                return float.Parse(_firstNumber).ToString();
 
             default:
-                return _firstNumber;
+                return float.Parse(_firstNumber).ToString();
         }
     }
 }
