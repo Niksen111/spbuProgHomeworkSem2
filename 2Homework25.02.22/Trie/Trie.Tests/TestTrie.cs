@@ -75,16 +75,4 @@ public class Tests
         Assert.AreEqual(trie.HowManyStartsWithPrefix("catland1"), 1);
         Assert.AreEqual(trie.HowManyStartsWithPrefix("catland111"), 0);
     }
-
-    [Test]
-    public void Kek()
-    {
-        var trie = new Trie();
-        trie.Add("a");
-        trie.Add("aaa");
-        trie.Add("aab");
-        trie.Remove("aab");
-        
-        Assert.Pass();
-    }
 }
