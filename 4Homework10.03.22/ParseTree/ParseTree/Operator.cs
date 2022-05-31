@@ -1,4 +1,4 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public abstract class Operator : INode
 {
@@ -9,7 +9,7 @@ public abstract class Operator : INode
     public bool AreGuardian => false;
 
 
-    public abstract double GetValue();
+    public abstract float GetValue();
 
     public void PrintYourself()
     {
@@ -23,7 +23,7 @@ public abstract class Operator : INode
     {
         if (LeftSon.AreGuardian)
         {
-            if (double.TryParse(line, out double number))
+            if (float.TryParse(line, out float number))
             {
                 LeftSon = new Operand(this, number);
                 return this;
@@ -54,7 +54,7 @@ public abstract class Operator : INode
         }
         if (RightSon.AreGuardian)
         {
-            if (double.TryParse(line, out double number))
+            if (float.TryParse(line, out float number))
             {
                 RightSon = new Operand(this, number);
                 return this;

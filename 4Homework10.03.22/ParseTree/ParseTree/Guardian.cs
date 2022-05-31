@@ -1,8 +1,8 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public class Guardian : INode
 {
-    public double GetValue() => 0;
+    public float GetValue() => 0;
 
     public bool AreGuardian => true;
 

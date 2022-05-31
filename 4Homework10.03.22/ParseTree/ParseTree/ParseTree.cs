@@ -1,4 +1,4 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public class ParseTree
 {
@@ -9,7 +9,7 @@ public class ParseTree
 
     private INode Head;
     private INode CurrentNode;
-    private double _result;
+    private float _result;
     public double GetResult => _result;
     public void RebuildTree(string expression)
     {

@@ -1,8 +1,8 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public interface INode
 {
-    double GetValue();
+    float GetValue();
     
     public void PrintYourself();
     

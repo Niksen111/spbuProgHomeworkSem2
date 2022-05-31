@@ -1,17 +1,17 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public class Operand : INode
 {
-    public Operand(INode? parent, double value)
+    public Operand(INode? parent, float value)
     {
         _parent = parent;
         _value = value;
     }
     
     private readonly INode? _parent;
-    private readonly double _value;
+    private readonly float _value;
     public bool AreGuardian => false;
-    public double GetValue() => _value;
+    public float GetValue() => _value;
 
     public void PrintYourself()
     {

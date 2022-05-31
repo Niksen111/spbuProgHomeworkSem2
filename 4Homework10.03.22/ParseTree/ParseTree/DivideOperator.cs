@@ -1,4 +1,4 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public class DivideOperator : Operator
 {
@@ -8,7 +8,7 @@ public class DivideOperator : Operator
         Value = '/';
     }
 
-    public override double GetValue()
+    public override float GetValue()
     {
         if (Math.Abs(RightSon.GetValue()) < 0.000001)
         {

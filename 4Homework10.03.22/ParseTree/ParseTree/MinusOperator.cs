@@ -1,4 +1,4 @@
-namespace ParseTree.Solution;
+namespace ParseTree;
 
 public class MinusOperator : Operator
 {
@@ -8,7 +8,7 @@ public class MinusOperator : Operator
         Value = '-';
     }
 
-    public override double GetValue()
+    public override float GetValue()
     {
         return LeftSon.GetValue() - RightSon.GetValue();
     }

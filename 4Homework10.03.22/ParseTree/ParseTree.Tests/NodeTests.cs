@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using ParseTree.Solution;
 
 namespace ParseTree.Tests;
 public class NodeTests
@@ -12,7 +11,7 @@ public class NodeTests
     [Test]
     public void OperandCreatedAndReturnsValue()
     {
-        INode node = new Operand(null, 2.5);
+        INode node = new Operand(null, 2.5f);
         Assert.AreEqual(node.GetValue(), 2.5);
     }
 
