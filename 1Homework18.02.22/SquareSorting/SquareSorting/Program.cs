@@ -1,6 +1,5 @@
-﻿using System;
+﻿namespace SquareSorting;
 
-namespace SquareSorting;
 internal class Program
 {
     /// <summary>
@@ -28,9 +27,7 @@ internal class Program
     /// <param name="secondVariable"></param>
     private static void Swap(ref int firstVariable, ref int secondVariable)
     {
-        firstVariable ^= secondVariable;
-        secondVariable ^= firstVariable;
-        firstVariable ^= secondVariable;
+        (firstVariable, secondVariable) = (secondVariable, firstVariable);
     }
     
     /// <summary>
@@ -54,16 +51,17 @@ internal class Program
     private static bool TestAreArraySorted()
     {
         var arrayTest1 = new[] { 5, 7, 4, -8, 1, 5 };
-        var arrayTest2 = new [] { 0 };
+        var arrayTest2 = new[] { 0 };
         var arrayTest3 = new[] { -1, 2, 3, 4, 5 };
 
-        return !IsArraySorted(arrayTest1) && IsArraySorted(arrayTest2)
+        return !IsArraySorted(arrayTest1) && IsArraySorted(arrayTest2) 
                                           && IsArraySorted(arrayTest3);
     }
+    
     private static bool TestSortByBubble()
     {
-        var arrayTest1 = new [] { 5, 7, 4, -8, 0, 5 };
-        var arrayTest2 = new [] { 0 };
+        var arrayTest1 = new[] { 5, 7, 4, -8, 0, 5 };
+        var arrayTest2 = new[] { 0 };
         SortByBubble(arrayTest1);
         SortByBubble(arrayTest2);
         return IsArraySorted(arrayTest1) && IsArraySorted(arrayTest2);
@@ -76,15 +74,28 @@ internal class Program
             Console.WriteLine("Tests failed :(");
             return -1;
         }
+        
         Console.WriteLine("Enter length of the array");
-        int arrayLength = int.Parse(Console.ReadLine());
+        var arrayLengthString = Console.ReadLine();
+        if (arrayLengthString == null)
+        {
+            return -1;
+        }
+        int arrayLength = int.Parse(arrayLengthString);
+        
         Console.WriteLine("Enter the array separated by space");
-        var arrayStrings = Console.ReadLine().Split(' ');
+        var arrayString = Console.ReadLine();
+        while (arrayString == null)
+        {
+            return -1;
+        }
+        var arrayStrings = arrayString.Split(' ');
         var array = new int[arrayLength];
         for (int i = 0; i < arrayStrings.Length; ++i)
         {
             array[i] = Int32.Parse(arrayStrings[i]);
         }
+        
         SortByBubble(array);
         Console.WriteLine("The array after sorting:");
         foreach (var element in array)
