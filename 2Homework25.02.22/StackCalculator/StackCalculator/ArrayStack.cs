@@ -1,6 +1,8 @@
-using StackCalculator;
-
 namespace StackCalculator;
+
+/// <summary>
+/// array-based stack
+/// </summary>
 public class ArrayStack : IStack
 {
     public ArrayStack()

@@ -6,12 +6,12 @@ namespace StackCalculator.Tests;
 [TestFixture]
 public class StackCalculatorTests
 {
-    private StackCalculator _calculator = new StackCalculator();
+    private StackCalculator _calculator = new StackCalculator(new ArrayStack());
     
     [SetUp]
     public void Setup()
     {
-        _calculator = new StackCalculator();
+        _calculator = new StackCalculator(new ListStack());
     }
 
     [Test]

@@ -1,5 +1,8 @@
 namespace StackCalculator;
 
+/// <summary>
+/// stack interface
+/// </summary>
 public interface IStack
 {
     /// <summary>
@@ -9,18 +12,17 @@ public interface IStack
     void Push(float number);
     
     /// <summary>
-    /// Pop element from the head of the stack
+    /// Pop element from the head of the stack or null if the stack is empty
     /// </summary>
-    /// <returns></returns>
     float? Pop();
     
     /// <summary>
-    /// Returns the element from the head of the stack
+    /// Returns the element from the head of the stack or null if the stack is empty
     /// </summary>
     float? Top { get; }
+    
     /// <summary>
     /// Returns true if the stack is empty
     /// </summary>
     bool IsEmpty { get; }
-
 }

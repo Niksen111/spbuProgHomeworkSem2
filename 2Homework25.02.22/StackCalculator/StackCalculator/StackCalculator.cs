@@ -1,47 +1,20 @@
 namespace StackCalculator;
 
+/// <summary>
+/// calculates expressions in prefix form
+/// </summary>
 public class StackCalculator
 {
-    public enum TypesOfStacks
-    {
-        ArrayStack,
-        ListStack
-    }
-
     /// <summary>
-    /// 1 for ArrayStack
-    /// 2 for ListStack
+    /// accepts the stack with which it will make calculations
     /// </summary>
-    /// <param name="typeOfStack"></param>
-    public StackCalculator(TypesOfStacks typeOfStack = TypesOfStacks.ArrayStack)
+    public StackCalculator(IStack stack)
     {
-        _myStack = new ArrayStack();
-
-        if (typeOfStack == TypesOfStacks.ListStack)
-        {
-            _myStack = new ListStack();
-        }
+        _myStack = stack;
     }
-    private IStack _myStack;
-
-    /// <summary>
-    /// 1 for ArrayStack
-    /// 2 for ListStack
-    /// </summary>
-    /// <param name="typeOfStack"></param>
-    public void ChangeStack(TypesOfStacks typeOfStack)
-    {
-        if (typeOfStack == TypesOfStacks.ArrayStack)
-        {
-            _myStack = new ArrayStack();
-            return;
-        }
-
-        if (typeOfStack == TypesOfStacks.ListStack)
-        {
-            _myStack = new ListStack();
-        }
-    }
+    
+    private readonly IStack _myStack;
+    
     
     /// <summary>
     /// Takes an expression in reverse Polish notation.
@@ -52,10 +25,9 @@ public class StackCalculator
     public float? CalculateExpression(string expression)
     {
         var expressionFixed = expression.Split();
-        int number;
         foreach (var piece in expressionFixed)
         {
-            if (int.TryParse(piece, out number))
+            if (int.TryParse(piece, out int number))
             {
                 _myStack.Push(number);
             }
