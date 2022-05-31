@@ -18,12 +18,9 @@ public class StackCalculatorTests
     public void CalculateExpression()
     {
         var expression = "5 97 333 3 / - * 17 / 0 +";
-        if (_calculator.CalculateExpression(expression) == null)
-        {
-            Assert.Fail();
-        }
+        Assert.IsNotNull(_calculator.CalculateExpression(expression));
         float result = (float) _calculator.CalculateExpression(expression)!;
-        Assert.IsTrue(Math.Abs(result + 4.1176) < 0.0001);
+        Assert.IsTrue(Math.Abs(result + 4.117647) < 0.0001);
     }
 
     [Test]

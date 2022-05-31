@@ -23,11 +23,12 @@ public class StackTests
         float? first = stack.Pop();
         float? second = stack.Pop();
         float? third = stack.Pop();
-        bool result = first != null && second != null
-            && third != null && Math.Abs((float) (first - 3)) < 0.0001
-            && Math.Abs((float) (second - 2)) < 0.0001
-            && Math.Abs((float) (third - 1)) < 0.0001;
-        Assert.IsTrue(result);
+        Assert.NotNull(first);
+        Assert.NotNull(second);
+        Assert.NotNull(third);
+        Assert.AreEqual(first, 3);
+        Assert.AreEqual(second, 2);
+        Assert.AreEqual(third, 1);
     }
 
     [TestCaseSource(nameof(Stacks))]
@@ -39,14 +40,13 @@ public class StackTests
     [TestCaseSource(nameof(Stacks))]
     public void EmptyStackIsEmptyAndNotEmptyStackIsNotEmpty(IStack stack)
     {
-        bool result = stack.IsEmpty;
+        Assert.IsTrue(stack.IsEmpty);
         stack.Push(1);
-        result = result && !stack.IsEmpty;
+        Assert.IsFalse(stack.IsEmpty);
         stack.Pop();
-        result = result && stack.IsEmpty;
+        Assert.IsTrue(stack.IsEmpty);
         stack.Pop();
-        result = result && stack.IsEmpty;
-        Assert.IsTrue(result);
+        Assert.IsTrue(stack.IsEmpty);
     }
 
 }
