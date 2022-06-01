@@ -56,4 +56,5 @@ partial class Form1
     #endregion
 
     private System.Windows.Forms.Timer timer1;
+    private PictureBox pictureBox1;
 }

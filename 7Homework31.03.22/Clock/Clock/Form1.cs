@@ -21,11 +21,18 @@ public partial class Form1 : Form
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-        var currentTime = DateTime.Now;
+        Image image = Image.FromFile("../../../clock1.png");
         graphics.Clear(Color.White);
-        graphics.DrawEllipse(Pens.Black, 0, 0, 300, 300);
+        var currentTime = DateTime.Now;
+        graphics.DrawImage(image, 0, 0);
+        //graphics.TranslateTransform((float) pictureBox1.Image.Width / 2, (float)pictureBox1.Image.Height / 2);
+        //graphics.RotateTransform(90.0f);
+        //graphics.TranslateTransform(-(float)pictureBox1.Image.Width / 2, -(float)pictureBox1.Image.Height / 2);
+        //graphics.Clear(Color.White);
+        //graphics.DrawEllipse(Pens.Black, 0, 0, 300, 300);
         graphics.DrawLine(Pens.Black, 150, 145, (int)(150 + 145 * Math.Sin(((double)currentTime.Second * 6) / 180 * Math.PI)), (int)(150 + 145 * Math.Cos((180.0d + currentTime.Second * 6) / 180 * Math.PI)));
         graphics.DrawLine(Pens.Black, 150, 145, (int)(150 + 130 * Math.Sin(((double)currentTime.Minute * 6) / 180 * Math.PI)), (int)(150 + 130 * Math.Cos((180.0d + currentTime.Minute * 6) / 180 * Math.PI)));
         graphics.DrawLine(Pens.Black, 150, 145, (int)(150 + 100 * Math.Sin(((double)(currentTime.Hour % 12) * 30) / 180 * Math.PI)), (int)(150 + 100 * Math.Cos((180.0d + (currentTime.Hour % 12) * 30) / 180 * Math.PI)));
+    
     }
 }
