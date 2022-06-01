@@ -10,7 +10,5 @@ static class Program
     {
         ApplicationConfiguration.Initialize();
         Application.Run(new Form1());
-        //FileInfo fileInfo = new FileInfo("../../../clock1.png");
-        //Console.WriteLine(fileInfo.FullName);
     }
 }
