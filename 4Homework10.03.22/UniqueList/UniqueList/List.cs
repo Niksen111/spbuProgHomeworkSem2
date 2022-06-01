@@ -1,6 +1,8 @@
-
 namespace UniqueList;
 
+/// <summary>
+/// List of int elements
+/// </summary>
 public class MyList
 {
     private class ListElement
@@ -24,8 +26,15 @@ public class MyList
     private readonly ListElement _head;
     private ListElement _lastElement;
     private int _length;
+
+    /// <summary>
+    /// Describing how many elements are in the List.
+    /// </summary>
     public int Length => _length;
 
+    /// <summary>
+    /// Adds the given element to the end of this list.
+    /// </summary>
     public virtual void Add(int value)
     {
         ++_length;
@@ -34,6 +43,9 @@ public class MyList
         _lastElement = newListElement;
     }
     
+    /// <summary>
+    /// Inserts an element into this list at a given index.
+    /// </summary>
     public virtual void Insert(int value, int index)
     {
         if (index > _length || index < 0)
@@ -48,10 +60,13 @@ public class MyList
             position = position.Next!;
         }
 
-        ListElement newListElement = new ListElement(value, position.Next);
+        var newListElement = new ListElement(value, position.Next);
         position.Next = newListElement;
     }
 
+    /// <summary>
+    /// Sets or Gets the element at the given index.
+    /// </summary>
     public virtual int this[int index]
     {
         get
@@ -88,6 +103,10 @@ public class MyList
         }
     }
 
+    /// <summary>
+    /// Removes the element at the given index.
+    /// </summary>
+    /// <returns>removed element</returns>
     public int Remove(int index)
     {
         if (index >= _length || index < 0)
