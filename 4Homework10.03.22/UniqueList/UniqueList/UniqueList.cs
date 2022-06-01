@@ -4,11 +4,9 @@ public class UniqueList : MyList
 {
     public override void Add(int value)
     {
-        ListElement position = Head;
-        for (int i = 0; i < length; ++i)
+        for (int i = 0; i < Length; ++i)
         {
-            position = position.Next!;
-            if (position.Value == value)
+            if (this[i] == value)
             {
                 throw new AddingExistingValueException();
             }
@@ -18,15 +16,30 @@ public class UniqueList : MyList
 
     public override void Insert(int value, int index)
     {
-        ListElement position = Head;
-        for (int i = 0; i < length; ++i)
+        for (int i = 0; i < Length; ++i)
         {
-            position = position.Next!;
-            if (position.Value == value)
+            if (this[i] == value)
             {
                 throw new AddingExistingValueException();
             }
         }
         base.Insert(value, index);
+    }
+
+    public override int this[int index]
+    {
+        get => base[index];
+        set
+        {
+            for (int i = 0; i < Length; ++i)
+            {
+                if (this[i] == value)
+                {
+                    throw new AddingExistingValueException();
+                }
+            }
+
+            base[index] = value;
+        }
     }
 }

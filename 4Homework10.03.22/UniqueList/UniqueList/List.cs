@@ -3,7 +3,7 @@ namespace UniqueList;
 
 public class MyList
 {
-    protected class ListElement
+    private class ListElement
     {
         public ListElement(int value, ListElement? next)
         {
@@ -16,33 +16,33 @@ public class MyList
 
     public MyList()
     {
-        Head = new ListElement(0, null);
-        LastElement = Head;
-        length = 0;
+        _head = new ListElement(0, null);
+        _lastElement = _head;
+        _length = 0;
     }
     
-    protected readonly ListElement Head;
-    protected ListElement LastElement;
-    protected int length;
-    public int Length => length;
+    private readonly ListElement _head;
+    private ListElement _lastElement;
+    private int _length;
+    public int Length => _length;
 
     public virtual void Add(int value)
     {
-        ++length;
-        ListElement newListElement = new ListElement(value, null);
-        LastElement.Next = newListElement;
-        LastElement = newListElement;
+        ++_length;
+        var newListElement = new ListElement(value, null);
+        _lastElement.Next = newListElement;
+        _lastElement = newListElement;
     }
     
     public virtual void Insert(int value, int index)
     {
-        if (index > Length || index < 0)
+        if (index > _length || index < 0)
         {
             throw new IndexOutOfRangeException();
         }
         
-        ++length;
-        ListElement position = Head;
+        ++_length;
+        var position = _head;
         for (int i = 0; i < index; ++i)
         {
             position = position.Next!;
@@ -52,30 +52,51 @@ public class MyList
         position.Next = newListElement;
     }
 
-    public void SetPosition(int value, int index)
+    public virtual int this[int index]
     {
-        if (index >= Length || index < 0)
+        get
         {
-            throw new IndexOutOfRangeException();
+            if (index >= _length || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+        
+            var position = _head;
+            for (int i = 0; i < index; ++i)
+            {
+                if (position.Next != null)
+                {
+                    position = position.Next;
+                }
+            }
+        
+            return position.Next!.Value;
         }
-        ListElement position = Head;
-        for (int i = 0; i < index + 1; ++i)
+        set
         {
-            position = position.Next!;
-        }
+            if (index >= _length || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            var position = _head;
+            for (int i = 0; i < index + 1; ++i)
+            {
+                position = position.Next!;
+            }
 
-        position.Value = value;
+            position.Value = value;
+        }
     }
 
     public int Remove(int index)
     {
-        if (index >= Length || index < 0)
+        if (index >= _length || index < 0)
         {
             throw new RemoveNonExistentElementException();
         }
         
-        --length;
-        ListElement position = Head;
+        --_length;
+        var position = _head;
         for (int i = 0; i < index; ++i)
         {
             position = position.Next!;
@@ -84,24 +105,5 @@ public class MyList
         int value = position.Next!.Value;
         position.Next = position.Next.Next;
         return value;
-    }
-
-    public int Get(int index)
-    {
-        if (index >= Length || index < 0)
-        {
-            throw new IndexOutOfRangeException();
-        }
-        
-        ListElement position = Head;
-        for (int i = 0; i < index; ++i)
-        {
-            if (position.Next != null)
-            {
-                position = position.Next;
-            }
-        }
-        
-        return position.Next!.Value;
     }
 }

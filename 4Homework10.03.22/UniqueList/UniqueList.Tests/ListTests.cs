@@ -1,10 +1,11 @@
-using NUnit.Framework;
-
 namespace UniqueList.Tests;
+
+using NUnit.Framework;
 
 public class Tests
 {
     private MyList _list = new MyList();
+    
     [SetUp]
     public void Setup()
     {
@@ -17,7 +18,9 @@ public class Tests
         _list.Add(6);
         _list.Add(-532);
         _list.Add(0);
-        Assert.IsTrue(_list.Get(0) == 6 && _list.Get(1) == -532 && _list.Get(2) == 0);
+        Assert.AreEqual(_list[0], 6);
+        Assert.AreEqual(_list[1], -532);
+        Assert.AreEqual(_list[2], 0);
     }
 
     [Test]
@@ -26,7 +29,9 @@ public class Tests
         _list.Add(1);
         _list.Insert(2, 0);
         _list.Insert(3, 2);
-        Assert.IsTrue(_list.Get(0) == 2 && _list.Get(1) == 1 && _list.Get(2) == 3);
+        Assert.AreEqual(_list[0], 2); 
+        Assert.AreEqual(_list[1], 1); 
+        Assert.AreEqual(_list[2], 3);
     }
 
     [Test]
@@ -35,9 +40,11 @@ public class Tests
         _list.Add(6);
         _list.Add(-532);
         _list.Add(0);
-        _list.SetPosition(35, 1);
-        _list.SetPosition(111, 2);
-        Assert.IsTrue(_list.Get(0) == 6 && _list.Get(1) == 35 && _list.Get(2) == 111);
+        _list[1] = 35;
+        _list[2] = 111;
+        Assert.AreEqual(_list[0], 6);
+        Assert.AreEqual(_list[1], 35); 
+        Assert.AreEqual(_list[2], 111);
     }
 
     [Test]
@@ -47,21 +54,21 @@ public class Tests
         _list.Add(-532);
         _list.Add(222);
         _list.Remove(1);
-        Assert.IsTrue(_list.Get(0) == 6 && _list.Get(1) == 222);
+        Assert.AreEqual(_list[0], 6); 
+        Assert.AreEqual(_list[1], 222);
     }
 
     [Test]
     public void LengthWorks()
     {
-        bool result = _list.Length == 0;
+        Assert.AreEqual(_list.Length, 0);
         _list.Add(545);
-        result = result && _list.Length == 1;
+        Assert.AreEqual(_list.Length, 1);
         _list.Insert(-666, 0);
-        result = result && _list.Length == 2;
-        _list.SetPosition(235, 0);
-        result = result && _list.Length == 2;
+        Assert.AreEqual(_list.Length, 2);
+        _list[0] = 235;
+        Assert.AreEqual(_list.Length, 2);
         _list.Remove(0);
-        result = result && _list.Length == 1;
-        Assert.IsTrue(result);
+        Assert.AreEqual(_list.Length, 1);
     }
 }
