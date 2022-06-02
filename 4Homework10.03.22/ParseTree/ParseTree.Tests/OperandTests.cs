@@ -5,6 +5,7 @@ namespace ParseTree.Tests;
 public class OperandTests
 {
     private INode _node = new Operand(null, 3.1415f);
+    
     [SetUp]
     public void SetUp()
     {

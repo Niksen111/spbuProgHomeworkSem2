@@ -5,10 +5,10 @@ namespace ParseTree;
 /// </summary>
 public abstract class Operator : INode
 {
-    protected char Value;
-    protected INode? Parent;
-    protected INode LeftSon = new Guardian();
-    protected INode RightSon = new Guardian();
+    protected virtual char Value { get; set; }
+    protected INode? Parent { get; set; }
+    protected INode LeftSon { get; private set; } = new Guardian();
+    protected INode RightSon { get; private set; } = new Guardian();
     public bool AreGuardian => false;
 
 
