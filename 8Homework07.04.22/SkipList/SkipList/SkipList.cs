@@ -46,7 +46,7 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
 
     private SkipListElement? AddRecursive(SkipListElement element, T value, out bool levelUp)
     {
-        while (element.Next != null && element.Value!.CompareTo(value) < 0)
+        while (element.Next != null && element.Next.Value!.CompareTo(value) < 0)
         {
             element = element.Next;
         }
@@ -63,7 +63,7 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
         if (levelUp1)
         {
             var random = new Random();
-            levelUp = random.Next(1) == 1;
+            levelUp = random.Next(2) == 0;
             var newElement = new SkipListElement(value);
             newElement.Next = element.Next;
             element.Next = newElement;
@@ -86,7 +86,29 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
         }
 
         ++_count;
-        AddRecursive(_listSkipLists[_listSkipLists.Count - 1], element, out bool levelUp);
+        var random = new Random();
+        bool levelUp;
+        SkipListElement? down;
+        if (_listSkipLists[0].Next == null)
+        {
+            levelUp = random.Next(2) == 0;
+            var newSkipElement = new SkipListElement(element);
+            _listSkipLists[0].Next = newSkipElement;
+            down = newSkipElement;
+        }
+        else
+        {
+            down = AddRecursive(_listSkipLists[_listSkipLists.Count - 1], element, out levelUp);
+        }
+        while (levelUp)
+        {
+            _listSkipLists.Add(new SkipListElement(default));
+            _listSkipLists[_listSkipLists.Count - 1].Down = _listSkipLists[_listSkipLists.Count - 2];
+            _listSkipLists[_listSkipLists.Count - 1].Next = new SkipListElement(element);
+            _listSkipLists[_listSkipLists.Count - 1].Next!.Down = down;
+            down = _listSkipLists[_listSkipLists.Count - 1].Next;
+            levelUp = random.Next(2) == 0;
+        }
     }
 
     public void Clear()
@@ -102,11 +124,21 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
 
     private bool ContainsRecursive(SkipListElement element, T value)
     {
-        while (element.Next != null && element.Value!.CompareTo(value) < 0)
+        while (element.Next != null && element.Next.Value!.CompareTo(value) <= 0)
         {
             element = element.Next;
         }
 
+        if (element.Value != null && element.Value.CompareTo(value) == 0)
+        {
+            return true;
+        }
+
+        if (element.Down != null)
+        {
+            return ContainsRecursive(element.Down, value);
+        }
+        
         return false;
     }
 
@@ -132,7 +164,38 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
         {
             throw new NotSupportedException();
         }
-        return false;
+
+        bool areRemoved = false;
+        var currentElement = _listSkipLists[_listSkipLists.Count - 1];
+        while (currentElement != null)
+        {
+            while (currentElement.Next != null && currentElement.Next!.Value!.CompareTo(item) < 0)
+            {
+                currentElement = currentElement.Next;
+            }
+
+            if (currentElement.Next != null && currentElement.Next.Value!.CompareTo(item) == 0)
+            {
+                currentElement.Next = currentElement.Next.Next;
+                areRemoved = true;
+                if (currentElement.Down == null)
+                {
+                    --_count;
+                }
+            }
+
+            currentElement = currentElement.Down;
+        }
+
+        for (int i = _listSkipLists.Count - 1; i > 0; --i)
+        {
+            if (_listSkipLists[i].Next == null)
+            {
+                _listSkipLists.RemoveAt(i);
+            }
+        }
+
+        return areRemoved;
     }
 
     public IEnumerator<T> GetEnumerator()
