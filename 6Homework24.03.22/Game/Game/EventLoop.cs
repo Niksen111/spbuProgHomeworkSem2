@@ -6,6 +6,7 @@ public class EventLoop
     public event EventHandler<EventArgs> DownHandler = (sender, args) => { };
     public event EventHandler<EventArgs> LeftHandler = (sender, args) => { };
     public event EventHandler<EventArgs> RightHandler = (sender, args) => { };
+    
     public void Run() 
     {
         while (true) 
