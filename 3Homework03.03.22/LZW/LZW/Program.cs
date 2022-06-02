@@ -46,7 +46,8 @@ public class Program
                     switch (input[1])
                     {
                         case "-c":
-                            CompressorLZW.ZipFile(input[0]);
+                            float ratio = CompressorLZW.ZipFile(input[0]);
+                            Console.WriteLine($"Compression ratio: {ratio}");
                             break;
                         case "-u":
                             CompressorLZW.UnzipFile(input[0]);

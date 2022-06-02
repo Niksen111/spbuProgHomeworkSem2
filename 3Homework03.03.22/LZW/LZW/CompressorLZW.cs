@@ -10,9 +10,10 @@ public static class CompressorLZW
     /// <summary>
     /// Compresses the file specified by the path.
     /// </summary>
-    public static void ZipFile(string path)
+    public static float ZipFile(string path)
     {
         var file = File.ReadAllBytes(path);
+        int sizeBefore = file.Length;
         var buffer = new byte[4];
         var zippedFile = new List<byte>();
         var dictionary = new Trie();
@@ -76,13 +77,16 @@ public static class CompressorLZW
         {
             zippedFile.Add(buffer[j]);
         }
+
+        var zippedFileArray = zippedFile.ToArray();
         File.Move(path, path + ".zipped");
-        File.WriteAllBytes(path + ".zipped", zippedFile.ToArray());
-        
+        File.WriteAllBytes(path + ".zipped", zippedFileArray);
+
+        return (float) sizeBefore / zippedFileArray.Length;
     }
 
     /// <summary>
-    /// Uncompresses the file specified by the path.
+    /// Decompresses the file specified by the path.
     /// </summary>
     public static void UnzipFile(string path)
     {
