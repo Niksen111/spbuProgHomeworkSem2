@@ -1,6 +1,6 @@
-﻿namespace LZW.Solution;
+﻿namespace LZW;
 
-internal class Program
+public class Program
 {
     private static void ShowCommands()
     {
@@ -9,12 +9,12 @@ internal class Program
         Console.WriteLine("    ||   -u to unzip the file");
         Console.WriteLine("    || Enter \"exit\" to exit");
     }
+    
     private static void InteractWithUser()
     {
         Console.WriteLine("Hello!");
         Console.WriteLine();
         ShowCommands();
-        CompressorLZW compressor = new CompressorLZW();
         while (true)
         {
             Console.WriteLine("    || Enter \"help\" to show commands");
@@ -46,10 +46,10 @@ internal class Program
                     switch (input[1])
                     {
                         case "-c":
-                            compressor.ZipFile(input[0]);
+                            CompressorLZW.ZipFile(input[0]);
                             break;
                         case "-u":
-                            compressor.UnzipFile(input[0]);
+                            CompressorLZW.UnzipFile(input[0]);
                             break;
                         default:
                             Console.WriteLine("    || IncorrectInput");
@@ -65,11 +65,6 @@ internal class Program
     
     public static void Main(string[] args)
     {
-        // BitArray myArray = new BitArray(8);
-        // myArray.Set(5, true);
-        // myArray.Length = 9;
-        // myArray.RightShift(1);
-        // Console.WriteLine("{0}", myArray.Length);
         InteractWithUser();
     }
 } 

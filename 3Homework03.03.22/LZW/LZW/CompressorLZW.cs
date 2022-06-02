@@ -1,24 +1,29 @@
-using System;
 using System.Collections;
 
 namespace LZW;
 
-public class CompressorLZW
+/// <summary>
+/// Compresses a file using the LZW algorithm
+/// </summary>
+public static class CompressorLZW
 {
-    public void ZipFile(string path)
+    /// <summary>
+    /// Compresses the file specified by the path.
+    /// </summary>
+    public static void ZipFile(string path)
     {
-        byte[] file = File.ReadAllBytes(path);
-        byte[] buffer = new byte[4];
-        List<byte> zippedFile = new List<byte>();
-        Trie dictionary = new Trie();
+        var file = File.ReadAllBytes(path);
+        var buffer = new byte[4];
+        var zippedFile = new List<byte>();
+        var dictionary = new Trie();
         dictionary.LoadAlphabet();
         
         int greaterDegree2 = 8;
-        BitArray reminder = new BitArray(0);
+        var reminder = new BitArray(0);
         
         for (int i = 0; i < file.Length; ++i)
         {
-            BitArray? code = dictionary.AddGradually(file[i]);
+            var code = dictionary.AddGradually(file[i]);
             if (code != null)
             {
                 int size = dictionary.GetDictionarySize - 1;
@@ -50,7 +55,7 @@ public class CompressorLZW
             }
         }
 
-        BitArray lastCode = dictionary.GetCurrentCode;
+        var lastCode = dictionary.GetCurrentCode;
         int lastSize = dictionary.GetDictionarySize - 1;
         if (lastSize > Math.Pow(2, greaterDegree2))
         {
@@ -71,14 +76,17 @@ public class CompressorLZW
         {
             zippedFile.Add(buffer[j]);
         }
-        
-        File.WriteAllBytes(path, zippedFile.ToArray());
         File.Move(path, path + ".zipped");
+        File.WriteAllBytes(path + ".zipped", zippedFile.ToArray());
+        
     }
 
-    public void UnzipFile(string path)
+    /// <summary>
+    /// Uncompresses the file specified by the path.
+    /// </summary>
+    public static void UnzipFile(string path)
     {
-        string extension = ".zipped";
+        var extension = ".zipped";
         for (int i = path.Length - 7; i < path.Length; ++i)
         {
             if (path[i] != extension[i - path.Length + 7])
@@ -86,10 +94,10 @@ public class CompressorLZW
                 throw new NotSupportedException();
             }
         }
-        byte[] input = File.ReadAllBytes(path);
+        var input = File.ReadAllBytes(path);
         List<byte> output = new List<byte>();
         
-        Dictionary<int, byte[]> dictionary = new Dictionary<int, byte[]>();
+        var dictionary = new Dictionary<int, byte[]>();
         for (int i = 0; i < 256; ++i)
         { 
             dictionary.Add(i, new []{(byte) i});
@@ -99,7 +107,7 @@ public class CompressorLZW
         int significantBits = 0;
         int lastIndex = 256;
         int greaterDegree2 = 8;
-        List<byte> newCode = new List<byte>();
+        var newCode = new List<byte>();
         foreach (byte symbol in input)
         {
             int currentDegree2 = greaterDegree2;
@@ -130,8 +138,5 @@ public class CompressorLZW
         File.Move(path, path.Substring(0, path.Length - 7));
     }
 
-    private int GreaterDegree2(int number)
-    {
-        return (int) Math.Ceiling(Math.Log2(number));
-    }
+    private static int GreaterDegree2(int number) => (int) Math.Ceiling(Math.Log2(number));
 }
