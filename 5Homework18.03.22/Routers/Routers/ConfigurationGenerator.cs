@@ -37,6 +37,8 @@ public class ConfigurationGenerator
             var numbersInLine = Strings.Split(line.Replace( ": ", " ").Replace( " (", " ").Replace( ")", "").Replace(",", "")).Select(x => int.Parse(x)).ToArray();
             if (numbersInLine.Length % 2 == 0)
             {
+                var error = Console.Error;
+                error.WriteLine("Impossible to create a topology.");
                 throw new InputDataException();
             }
 
@@ -44,6 +46,8 @@ public class ConfigurationGenerator
             {
                 if (numbersInLine[i + 1] < 0)
                 {
+                    var error = Console.Error;
+                    error.WriteLine("Impossible to create a topology.");
                     throw new InputDataException();
                 }
 
