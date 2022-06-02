@@ -2,7 +2,7 @@
 
 namespace SkipList;
 
-public class SkipList<T> : IList<T>
+public class SkipList<T> : IList<T>, IReadOnlyCollection<T>
 {
     public int Count { get; }
 
