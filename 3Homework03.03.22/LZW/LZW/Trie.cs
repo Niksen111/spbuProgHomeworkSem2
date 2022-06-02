@@ -2,6 +2,9 @@ using System.Collections;
 
 namespace LZW;
 
+/// <summary>
+/// Structure for storing a set of strings
+/// </summary>
 public class Trie
 {
     private class Node
@@ -34,6 +37,9 @@ public class Trie
     public int GetDictionarySize => _dictionarySize;
     public BitArray GetCurrentCode => _currentPosition.Code;
     
+    /// <summary>
+    /// 
+    /// </summary>
     private void IncreaseCurrentCode()
     {
         if (!_currentCode[0])
@@ -61,6 +67,10 @@ public class Trie
             _currentCode.Set(_currentCode.Length - 1, true);
         }
     }
+    
+    /// <summary>
+    /// Adds an alphabet to the dictionary
+    /// </summary>
     public void LoadAlphabet()
     {
         _currentCode = new BitArray(8);
@@ -71,6 +81,9 @@ public class Trie
         }
     }
 
+    /// <summary>
+    /// Consistently fills in the vocabulary
+    /// </summary>
     public BitArray? AddGradually(byte b)
     {
         if (_currentPosition.Next.ContainsKey(b))
@@ -91,6 +104,9 @@ public class Trie
         return position.Code;
     }
 
+    /// <summary>
+    /// Adds a line to the dictionary
+    /// </summary>
     public bool Add(byte[] element)
     {
         Node position = _head;
@@ -123,6 +139,9 @@ public class Trie
         return result;
     }
 
+    /// <summary>
+    /// Checks if the word is in the dictionary
+    /// </summary>
     public bool Contains(byte[] element)
     {
         Node position = _head;
@@ -138,6 +157,9 @@ public class Trie
         return position.IsTerminal;
     }
 
+    /// <summary>
+    /// Returns the number of lines beginning with the given prefix
+    /// </summary>
     public int HowManyStartsWithPrefix(byte[] prefix)
     {
         Node position = _head;
