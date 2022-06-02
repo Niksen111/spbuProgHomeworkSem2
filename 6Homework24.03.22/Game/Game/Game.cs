@@ -21,6 +21,8 @@ public class Game
         {
             return;
         }
+        
+        //Console.SetCursorPosition(_currentPosition.Item2 + x, _currentPosition.Item1 + y);
         Console.SetCursorPosition(_currentPosition.Item2 - _lastMove.Item1, _currentPosition.Item1 - _lastMove.Item2);
         Console.Write(' ');
         Console.SetCursorPosition(_currentPosition.Item2, _currentPosition.Item1);
@@ -30,6 +32,7 @@ public class Game
         _currentPosition.Item1 += y;
         _lastMove = (x, y);
         Console.Write('@');
+        Console.SetCursorPosition(_currentPosition.Item2, _currentPosition.Item1);
     }
 
     public void Up(object sender, EventArgs args)
