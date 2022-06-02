@@ -2,7 +2,10 @@ using Microsoft.VisualBasic;
 
 namespace Routers;
 
-public class ConfigurationGenerator : IConfigurationGenerator
+/// <summary>
+/// This topology creates an optimal network configuration without cycles
+/// </summary>
+public class ConfigurationGenerator
 {
     public ConfigurationGenerator(string path)
     {
@@ -15,6 +18,10 @@ public class ConfigurationGenerator : IConfigurationGenerator
     private int _nodesNumber;
     private SortedList<int, int>[] _resultTopology;
     private int _sumOfCapacities;
+    
+    /// <summary>
+    /// The sum of the network bandwidth
+    /// </summary>
     public int SumOfCapacities => _sumOfCapacities;
 
     private void GetTopology(string path)
@@ -48,14 +55,25 @@ public class ConfigurationGenerator : IConfigurationGenerator
             }
         }
     }
+    
+    /// <summary>
+    /// Generates a configuration from an input file
+    /// </summary>
+    /// <param name="path">path to input file</param>
     public void GenerateConfig(string path)
     {
         GetTopology(path);
         _topology.Sort(delegate((int, int ,int) x, (int, int, int) y)
         {
-            if (x.Item1 == y.Item1) return 0;
-            else if (x.Item1 < y.Item1) return -1;
-            else return 1;
+            if (x.Item1 == y.Item1)
+            {
+                return 0;
+            }
+            if (x.Item1 < y.Item1)
+            {
+                return -1;
+            }
+            return 1;
         });
         var connectivityComponents = new int[_nodesNumber];
         _resultTopology = new SortedList<int, int>[_nodesNumber];
@@ -82,14 +100,18 @@ public class ConfigurationGenerator : IConfigurationGenerator
         }
     }
 
+    /// <summary>
+    /// Prints the configuration in the output file
+    /// </summary>
+    /// <param name="path">path to output file</param>
     public void PrintConfigToFile(string path)
     {
-        StreamWriter file = new StreamWriter(path);
+        var file = new StreamWriter(path);
         for (int i = 0; i < _nodesNumber; ++i)
         {
             if (_resultTopology[i].Count > 0)
             {
-                file.Write($"{i+1}: ");
+                file.Write($"{i + 1}: ");
 
                 int j = 0;
                 foreach (var element in _resultTopology[i])
