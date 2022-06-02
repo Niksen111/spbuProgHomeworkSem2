@@ -34,7 +34,7 @@ public class Trie
     public int GetDictionarySize => _dictionarySize;
     public BitArray GetCurrentCode => _currentPosition.Code;
     
-    private void Increase_currentCode()
+    private void IncreaseCurrentCode()
     {
         if (!_currentCode[0])
         {
@@ -84,7 +84,7 @@ public class Trie
         _currentPosition.Next.Add(b, newNode);
         _currentPosition.Next[b].Code = new BitArray(_currentCode);
         newNode.IsTerminal = true;
-        Increase_currentCode();
+        IncreaseCurrentCode();
         Node position = _currentPosition;
         _currentPosition = _head;
             
@@ -110,7 +110,7 @@ public class Trie
         {
             ++_dictionarySize;
             position.Code = new BitArray(_currentCode);
-            Increase_currentCode();
+            IncreaseCurrentCode();
             position = _head;
             foreach (byte b in element)
             {
