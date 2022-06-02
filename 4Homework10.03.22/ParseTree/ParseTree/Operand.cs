@@ -1,5 +1,8 @@
 namespace ParseTree;
 
+/// <summary>
+/// A type of node that stores an operand.
+/// </summary>
 public class Operand : INode
 {
     public Operand(INode? parent, float value)
@@ -15,7 +18,7 @@ public class Operand : INode
 
     public void PrintYourself()
     {
-        Console.WriteLine("{0} ", _value);
+        Console.WriteLine($"{_value} ");
     }
 
     public INode Add(string element)

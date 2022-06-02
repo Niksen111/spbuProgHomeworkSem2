@@ -1,5 +1,8 @@
 namespace ParseTree;
 
+/// <summary>
+/// Node corresponding to the division operation.
+/// </summary>
 public class DivideOperator : Operator
 {
     public DivideOperator(INode? parent)

@@ -1,5 +1,8 @@
 namespace ParseTree;
 
+/// <summary>
+/// Node corresponding to the multiplication operation.
+/// </summary>
 public class MultiplyOperator : Operator
 {
     public MultiplyOperator(INode? parent)

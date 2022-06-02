@@ -1,5 +1,8 @@
 namespace ParseTree;
 
+/// <summary>
+/// The type of node that stores the operation.
+/// </summary>
 public abstract class Operator : INode
 {
     protected char Value;
@@ -13,7 +16,7 @@ public abstract class Operator : INode
 
     public void PrintYourself()
     {
-        Console.WriteLine("({0} ", Value);
+        Console.WriteLine($"({Value} ");
         LeftSon.PrintYourself();
         RightSon.PrintYourself();
         Console.WriteLine(") ");

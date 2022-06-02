@@ -1,5 +1,8 @@
 namespace ParseTree;
 
+/// <summary>
+/// A sheet of tree.
+/// </summary>
 public class Guardian : INode
 {
     public float GetValue() => 0;
