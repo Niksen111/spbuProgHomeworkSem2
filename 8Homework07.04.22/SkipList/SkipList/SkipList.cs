@@ -21,13 +21,11 @@ public class SkipList<T> : IList<T>, IReadOnlyCollection<T> where T : IComparabl
 
     public int Count => _count;
 
-    public bool IsReadOnly { get; }
+    public bool IsReadOnly => false;
     
     public SkipList()
     {
         _listSkipLists = new List<SkipListElement> {new(default)};
-        _count = 0;
-        IsReadOnly = false;
     }
 
     private List<T?> ToList()

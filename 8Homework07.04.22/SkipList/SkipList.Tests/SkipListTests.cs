@@ -4,7 +4,7 @@ namespace SkipList.Tests;
 
 public class SkipListTests
 {
-    private SkipList<string> _list = new SkipList<string>();
+    private SkipList<string> _list = new();
 
     [SetUp]
     public void Setup()
